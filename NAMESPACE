@@ -1,0 +1,5 @@
+import(survival)
+export(kmi, cox.kmi, summary.cox.kmi)
+S3method(print, cox.kmi)
+S3method(summary, cox.kmi)
+S3method(print, summary.cox.kmi)
