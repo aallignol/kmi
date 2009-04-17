@@ -60,9 +60,10 @@ kmi <- function(data, time.col, event.col, id.col = NULL, nimp = 10,
             tmp[tmp == 0] <- 1
             spr <- gg / c(gg[1:tmp], rep(gg[tmp], lg - tmp))
             wp <- -diff(spr)
-            wp <- if (a) c(wp, 1 - sum(wp)) else wp
+            wp <- if (a) c(wp, wp[length(wp)]) else wp
             tt[j] <- sample(cens.times, 1, replace = TRUE, prob = wp)
-            print(tt[j] > itimes[j])
+            print(sum(wp))
+#            print(tt[j] > itimes[j])
         }
         newtimes <- c(otimes, tt)
         newevent <- c(event[ind], rep(censcode, length(tt)))
