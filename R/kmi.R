@@ -24,37 +24,6 @@ kmi <- function(data, time.col, event.col, id.col = NULL, nimp = 10,
     ind <- which(event %in% c(censcode, failcode))
     itimes <- times[-ind] # times to impute
     otimes <- times[ind] # other times (i.e., event of interest or censoring)
-    #if (missing(seed)) seed <- 13
-    #set.seed(seed)
-##     if (bootstrap) {
-##         if (missing(index)) {
-##             index <- lapply(seq_len(nboot), function(k) {
-##                 sample(seq_len(nrow(wdata)), nrow(wdata),
-##                        replace = TRUE)
-##             })
-##         }
-##         g <- matrix(0, nrow = nboot, ncol = length(cens.times))
-##         for (l in seq_len(nboot)) {
-##             temp <- data.frame(tt = wtimes[index[[l]]], ev = wevent[index[[l]]])
-##             tmp <- summary(survfit(Surv(tt, ev == censcode) ~ 1, temp))
-##             ordre <- findInterval(cens.times, tmp$time)
-##             ordre[ordre == 0] <- NA
-##             g[l, ] <- tmp$surv[ordre]
-##             g[l, ][is.na(g[l, ])] <- 1
-##         }
-##         g <- apply(g, 2, mean)
-##         glast <- g[length(g)]
-##         wp <- -diff(c(1, g))
-##         if (glast > 0) {
-##             wp <- c(wp, glast)
-##             cens.times <- c(cens.times, max(wtimes) + epsilon)
-##         }
-##     }
-    if (wevent[which.max(wtimes)] != censcode) {
-        wtimes <- c(wtimes, max(wtimes) + epsilon)
-        cens.times <- c(cens.times, max(wtimes) + epsilon)
-        wevent <- c(wevent, censcode)
-    }
     if (bootstrap) {
         if (missing(index)) {
             index <- lapply(seq_len(nboot), function(k) {
@@ -76,16 +45,24 @@ kmi <- function(data, time.col, event.col, id.col = NULL, nimp = 10,
     else {
         g <- summary(survfit(Surv(wtimes, wevent == censcode) ~ 1))
         gg <- c(1, g$surv)
+    }  
+    a <- FALSE
+    if (wevent[which.max(wtimes)] != censcode) {
+        wtimes <- c(wtimes, max(wtimes) + epsilon)
+        cens.times <- c(cens.times, max(wtimes) + epsilon)
+        a <- TRUE
     }
     lg <- length(gg)
     res <- lapply(seq_len(nimp), function(i) {
         tt <- double(length(itimes))
         for (j in seq_along(itimes)) {
-            tmp <- findInterval(itimes[j], cens.times)
+            tmp <- findInterval(itimes[j], c(0, cens.times))
             tmp[tmp == 0] <- 1
             spr <- gg / c(gg[1:tmp], rep(gg[tmp], lg - tmp))
             wp <- -diff(spr)
+            wp <- if (a) c(wp, 1 - sum(wp)) else wp
             tt[j] <- sample(cens.times, 1, replace = TRUE, prob = wp)
+            print(tt[j] > itimes[j])
         }
         newtimes <- c(otimes, tt)
         newevent <- c(event[ind], rep(censcode, length(tt)))
