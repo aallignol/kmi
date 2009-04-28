@@ -1,7 +1,7 @@
 kmi <- function(data, time.col, event.col, id.col = NULL, nimp = 10,
                 failcode = 1, censcode = 0, epsilon = 1,
                 bootstrap = FALSE, nboot = 10, index) {
-  if (!is.null(id.col)) {
+    if (!is.null(id.col)) {
         info <- match(c(time.col, event.col, id.col), names(data))
         wdata <- data[order(data[, id.col], data[, time.col]), ]
         masque <- rbind(1, apply(as.matrix(wdata[, id.col]), 2, diff))
