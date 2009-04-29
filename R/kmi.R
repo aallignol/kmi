@@ -46,4 +46,3 @@ kmi <- function(formula, data, id, etype, nimp = 10, epsilon = 1,
     class(zzz) <- "kmi"
     zzz
 }
-        
