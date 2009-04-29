@@ -37,5 +37,5 @@ kmi.classic <- function(y, etype, failcode,
         a <- TRUE
     }
     list(gg = gg, cens.times = cens.times, itimes = itimes,
-         otimes = otimes, place = ind)
+         otimes = otimes, place = ind, a = a)
 }

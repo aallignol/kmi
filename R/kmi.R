@@ -16,13 +16,12 @@ kmi <- function(formula, data, id, etype, failcode = 1, nimp = 10, epsilon = 1,
     id <- model.extract(m, "id")
     etype <- model.extract(m, "etype")
     if (attr(Y, "type") == "counting" && !is.null(id)) {
-        return(list(y = Y, id = id, etype = etype, failcode = failcode))
         toimpute <- kmi.tdc(Y, id = id, etype = etype, failcode = failcode,
-                                  bootstrap = bootstrap, nboot = nboot)
+                            bootstrap = bootstrap, nboot = nboot)
     }
     else {
         toimpute <- kmi.classic(Y, etype = etype, failcode = failcode,
-                                  bootstrap = bootstrap, nboot = nboot)
+                                bootstrap = bootstrap, nboot = nboot)
     }
     itimes <- toimpute$itimes
     gg <- toimpute$gg
@@ -33,7 +32,7 @@ kmi <- function(formula, data, id, etype, failcode = 1, nimp = 10, epsilon = 1,
         for (j in seq_along(itimes)) {
             spr <- gg / c(gg[1:tmp[j]], rep(gg[tmp[j]], lg - tmp[j]))
             wp <- -diff(spr)
-            wp <- if (a) c(wp, spr[length(spr)]) else wp
+            wp <- if (toimpute$a) c(wp, spr[length(spr)]) else wp
             tt[j] <- sample(cens.times, 1, replace = TRUE, prob = wp)
         }
         newtimes <- c(toimpute$otimes, tt)
