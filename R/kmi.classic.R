@@ -12,7 +12,7 @@ kmi.classic <- function(y, etype, failcode,
     if (bootstrap) {
         if (missing(index)) {
             index <- lapply(seq_len(nboot), function(k) {
-                sample(seq_len(nrow(wdata)), nrow(wdata),
+                sample(seq_len(nrow(y)), nrow(y),
                        replace = TRUE)
             })
         }
