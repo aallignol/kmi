@@ -29,12 +29,12 @@ kmi.tdc <- function(y, etype, id, failcode,
         gg <- c(1, g)
     }
     else {
-        g <- summary(survfit(Surv(ysub[, 1], ysub[, 2] == 0) ~ 1))
+        g <- summary(survfit(Surv(ysub[, 2], ysub[, 3] == 0) ~ 1))
         gg <- c(1, g$surv)
     }
     a <- FALSE
-    if (y[, 2][which.max(y[, 1])] != 0) {
-        cens.times <- c(cens.times, max(y[, 1]) + epsilon)
+    if (y[, 3][which.max(y[, 2])] != 0) {
+        cens.times <- c(cens.times, max(y[, 2]) + epsilon)
         a <- TRUE
     }
     list(gg = gg, cens.times = cens.times, itimes = itimes,
