@@ -1,4 +1,4 @@
-kmi <- function(formula, data, id, etype, nimp = 10, epsilon = 1,
+kmi <- function(formula, data, id, etype, failcode = 1, nimp = 10, epsilon = 1,
                 bootstrap = FALSE, nboot = 10, index) {
     Call <- match.call()
     if ((mode(Call[[2]]) == 'call' &&  Call[[2]][[1]] == as.name('Surv'))
@@ -16,7 +16,8 @@ kmi <- function(formula, data, id, etype, nimp = 10, epsilon = 1,
     id <- model.extract(m, "id")
     etype <- model.extract(m, "etype")
     if (attr(Y, "type") == "counting" && !is.null(id)) {
-        toimpute <- kmi.tdp(Y, id = id, etype = etype, failcode = failcode,
+        return(list(y = Y, id = id, etype = etype, failcode = failcode))
+        toimpute <- kmi.tdc(Y, id = id, etype = etype, failcode = failcode,
                                   bootstrap = bootstrap, nboot = nboot)
     }
     else {
