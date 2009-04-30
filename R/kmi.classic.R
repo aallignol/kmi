@@ -1,4 +1,4 @@
-kmi.classic <- function(y, etype, failcode, 
+kmi.classic <- function(y, etype, failcode, epsilon,
                         bootstrap, nboot, index) {
     if (!is.Surv(y)) stop("y must be a Surv object")
     if (attr(y, "type") != "right") stop("Can only handle right censored data")

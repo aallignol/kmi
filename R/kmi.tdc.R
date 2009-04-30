@@ -1,4 +1,4 @@
-kmi.tdc <- function(y, etype, id, failcode,
+kmi.tdc <- function(y, etype, id, failcode, epsilon,
                     bootstrap, nboot, index) {
     y <- y[order(id, y[, 2]), ]
     masque <- rbind(1, apply(as.matrix(id), 2, diff))

@@ -16,11 +16,11 @@ kmi <- function(formula, data, id, etype, failcode = 1, nimp = 10, epsilon = 1,
     id <- model.extract(m, "id")
     etype <- model.extract(m, "etype")
     if (attr(Y, "type") == "counting" && !is.null(id)) {
-        toimpute <- kmi.tdc(Y, id = id, etype = etype, failcode = failcode,
-                            bootstrap = bootstrap, nboot = nboot)
+        toimpute <- kmi.tdc(Y, id = id, etype = etype, failcode = failcode, 
+                            epsilon = epsilon, bootstrap = bootstrap, nboot = nboot)
     }
     else {
-        toimpute <- kmi.classic(Y, etype = etype, failcode = failcode,
+        toimpute <- kmi.classic(Y, etype = etype, failcode = failcode, epsilon = epsilon,
                                 bootstrap = bootstrap, nboot = nboot)
     }
     itimes <- toimpute$itimes
