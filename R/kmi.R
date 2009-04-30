@@ -29,6 +29,7 @@ kmi <- function(formula, data, id, etype, failcode = 1, nimp = 10, epsilon = 1,
     cens.times <- toimpute$cens.times
     tmp <- findInterval(itimes, c(0, cens.times))
     res <- lapply(seq_len(nimp), function(i) {
+        tt <- double(length(itimes))
         for (j in seq_along(itimes)) {
             spr <- gg / c(gg[1:tmp[j]], rep(gg[tmp[j]], lg - tmp[j]))
             wp <- -diff(spr)
