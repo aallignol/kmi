@@ -1,6 +1,7 @@
 kmi.tdc <- function(y, etype, id, failcode, epsilon,
                     bootstrap, nboot, index) {
     y <- y[order(id, y[, 2]), ]
+    etype[y[, 3] == 0] <- 0
     masque <- rbind(1, apply(as.matrix(id), 2, diff))
     masque <- c(masque[-1], 1)
     ysub <- y[masque != 0, ]

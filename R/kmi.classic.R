@@ -3,6 +3,7 @@ kmi.classic <- function(y, etype, failcode, epsilon,
     if (!is.Surv(y)) stop("y must be a Surv object")
     if (attr(y, "type") != "right") stop("Can only handle right censored data")
     if (is.null(etype)) stop()
+    etype[y[, 2] == 0] <- 0
     cens.times <- sort(unique(y[, 1][y[, 2] == 0]))
     indice <- seq_along(etype)
     ##ind <- which(etype %in% c(censcode, failcode))
