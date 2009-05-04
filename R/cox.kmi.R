@@ -1,4 +1,4 @@
-cox.kmi <- function(formula, x, ...) {
+cox.kmi <- function(formula, x, df.complete = Inf, ...) {
     if (!inherits(x, "kmi")) {
         stop("'x' must be of class 'kmi'")
     }
@@ -11,7 +11,7 @@ cox.kmi <- function(formula, x, ...) {
         tmp <- coxph(formula, data = daten)
         tmp
     })
-    res <- MIcombine(result)
+    res <- MIcombine(result, df.complete = df.complete)
     zzz <- list(coefficients = res$coefficients,
                 variance = res$variance,
                 nimp = res$nimp,
