@@ -1,6 +1,6 @@
 print.summary.cox.kmi <- function(x, digits = max(getOption("digits") - 3, 3),
                                   signif.stars = getOption("show.signif.stars"),
-                                  print.imp = FALSE, ...) {
+                                  print.ind = FALSE, ...) {
     if (!inherits(x, "summary.cox.kmi")) {
         stop("'x' must be of class 'kmi'")
     }
@@ -18,13 +18,13 @@ print.summary.cox.kmi <- function(x, digits = max(getOption("digits") - 3, 3),
     cat("\n")
     print(x$conf.int)
     cat("\n")
-    if (print.imp) {
-        cat("**************************************\n")
-        cat("Separate estimate for each imputation:\n")
-        cat("**************************************\n\n")
-        for (i in seq_along(x$cox.kmi.fit)) {
+    if (print.ind) {
+        cat("*********************\n")
+        cat("Individual estimates:\n")
+        cat("*********************\n\n")
+        for (i in seq_along(x$individual.fit)) {
             cat(paste("*** Imputation", i, "***", sep = " ")); cat("\n")
-            print(x$cox.kmi.fit[[i]], digits = max(getOption("digits") - 3, 3),
+            print(x$individual.fit[[i]], digits = max(getOption("digits") - 3, 3),
                   signif.stars = getOption("show.signif.stars"))
             cat("\n")
         }
