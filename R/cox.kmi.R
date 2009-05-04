@@ -16,6 +16,7 @@ cox.kmi <- function(formula, x, ...) {
                 variance = res$variance,
                 nimp = res$nimp,
                 df = res$df,
+                call = call,
                 individual.fit = result)
     class(zzz) <- "cox.kmi"
     zzz
