@@ -44,6 +44,6 @@ aa <- kmi(Surv(time, ev != 0) ~ 1, data, etype = ev, nimp = 13)
 length(aa$imputed.data) == 13
 
 
-### test on the bootstrap
+### 
 
 

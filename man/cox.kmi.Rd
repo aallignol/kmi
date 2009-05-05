@@ -1,52 +1,59 @@
 \name{cox.kmi}
 \alias{cox.kmi}
+
 \title{Cox proportional hazards model applied to imputed data sets}
 \description{
-  The function fits a Cox proportional hazards model to estimate the
-  regression coefficients in a proportional subdistribution hazards
-  model to the imputed data sets, and pooled the results together.
+  The function fits Cox proportional hazards models to each imputed
+  data sets to estimate the regression coefficients in a proportional
+  subdistribution hazards model, and pooled the results together.
 }
 \usage{
-cox.kmi(formula, kmi.object, ...)
+cox.kmi(formula, x, df.complete = Inf, ...)
+}
+\arguments{
+  \item{formula}{A formula object, with the response on the left of a ~
+    operator, and the terms on the right. The response must be a
+    survival object as returned by the \code{\link[survival]{Surv}}
+    function.}
+  \item{x}{An object of class \code{kmi}.}
+  \item{df.complete}{Complete data degrees of freedom.}
+  \item{\dots}{Further arguments for the \code{\link[survival]{coxph}}
+    function.}
 }
 \details{
   Fits a Cox proportional hazards model on each imputed data set to
   estimate the regression coefficients in a proportional
-  subdistribution hazards model, and pooled the results together.
-
-  The \code{data} argument in \code{formula} must not be supplied.
-  This is done internally. However the complete data set with the
-  covariates must be supplied in the call to \code{kmi} which is then
-  copied in the \code{kmi} object.
-
-}
-%- maybe also 'usage' for other objects documented here.
-\arguments{
-  \item{formula}{a formula object, with the response on the left of a ~
-    operator, and the terms on the right. The response must be a
-    survival object as returned by the Surv function.} 
-  \item{kmi.object}{An object of class \code{kmi}, as returned by the
-    \code{kmi} function}
-  \item{\dots}{Further arguments for the \code{coxph} function}
+  subdistribution hazards model, and pooled the results together, using
+  the \code{\link[mitools]{MIcombine}} function of the mitools package.
 }
 \value{
-  Returns an object of class \code{cox.kmi} with the following
-  components: 
+  An object of class \code{cox.kmi} including the following components:
+  \item{coefficients}{Pooled regression coefficient estimates}
+  \item{variance}{Pooled variance estimate}
+  \item{nimp}{Number of multiple imputations}
+  \item{df}{degree of freedom}
   \item{call}{The matched call}
-  \item{coef}{Pooled regression coefficients}
-  \item{var}{Pooled variance estimates}
-  \item{cox.kmi.fit}{A list containing the estimates for each data
-    set. This is a list of \code{coxph} objects}
+  \item{individual.fit}{A list of \code{coxph} objects. One for each
+    imputed data set.}
 }
-\note{
-  Results are not pooled for frailties yet
-}
-\references{Ruan and Gray}
 \author{Arthur Allignol, \email{arthur.allignol@fdm.uni-freiburg.de}}
-\seealso{\code{\link[survival]{coxph}}, \code{\link{kmi}},
-  \code{\link{print.cox.kmi}}, \code{\link{summary.cox.kmi}}}
-\examples{
-### to be written
+\note{
+  The \code{data} argument in \code{coxph} must not be supplied.
+  However the complete data set with the covariates must be supplied in
+  the call to \code{kmi} which is then copied in the \code{kmi} object.
 }
+\seealso{\code{\link[survival]{coxph}},
+  \code{\link[mitools]{MIcombine}}, \code{\link{print.cox.kmi}},
+  \code{\link{summary.cox.kmi}}}
+\examples{
+data(icu.pneu)
+
+set.seed(1313)
+imp.dat <- kmi(Surv(entry, exit, status) ~ 1, data = icu.pneu,
+               etype = event, id = id, failcode = 3, nimp = 5)
+
+fit.kmi <- cox.kmi(Surv(entry, exit, event == 3) ~ pneu, imp.dat)
+}
+\keyword{survival}
 \keyword{models}
 \keyword{regression}
