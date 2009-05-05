@@ -1,6 +1,7 @@
-kmi <- function(formula, data, id, etype, failcode = 1, nimp = 10, epsilon = 1,
+kmi <- function(formula, data, id = NULL, etype, failcode = 1, nimp = 10, epsilon = 1,
                 bootstrap = FALSE, nboot = 10, index) {
     Call <- match.call()
+    arg.etype <- deparse(substitute(etype))
     if ((mode(Call[[2]]) == 'call' &&  Call[[2]][[1]] == as.name('Surv'))
         || inherits(formula, 'Surv'))  {
         stop("'kmi' requires a formula as the first argument")
@@ -18,13 +19,13 @@ kmi <- function(formula, data, id, etype, failcode = 1, nimp = 10, epsilon = 1,
     aa <- Call[[2]][[2]]
     if (attr(Y, "type") == "counting" && !is.null(id)) {
         info <- c(as.character(aa[[3]])[as.character(aa[[3]]) %in% names(data)],
-                  as.character(aa[[4]])[as.character(aa[[4]]) %in% names(data)])
+                  arg.etype)
         toimpute <- kmi.tdc(Y, id = id, etype = etype, failcode = failcode, 
                             epsilon = epsilon, bootstrap = bootstrap, nboot = nboot)
     }
     else {
         info <- c(as.character(aa[[2]])[as.character(aa[[2]]) %in% names(data)],
-                  as.character(aa[[3]])[as.character(aa[[3]]) %in% names(data)])
+                  arg.etype)
         toimpute <- kmi.classic(Y, etype = etype, failcode = failcode, epsilon = epsilon,
                                 bootstrap = bootstrap, nboot = nboot)
     }
