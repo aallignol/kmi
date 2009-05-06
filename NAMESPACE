@@ -1,4 +1,5 @@
 import(survival)
+import(mitools)
 export(kmi, cox.kmi, summary.cox.kmi)
 S3method(print, cox.kmi)
 S3method(summary, cox.kmi)
