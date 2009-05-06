@@ -20,7 +20,7 @@ kmi.tdc <- function(y, etype, id, failcode, epsilon,
         }
         g <- matrix(0, nrow = nboot, ncol = length(cens.times))
         for (l in seq_len(nboot)) {
-            tmp <- summary(survfit(Surv(ysub[index[[l]], 2, ysub[index[[l]], 3] == 0]) ~ 1))
+            tmp <- summary(survfit(Surv(ysub[index[[l]], 2], ysub[index[[l]], 3] == 0) ~ 1))
             ordre <- findInterval(cens.times, tmp$time)
             ordre[ordre == 0] <- NA
             g[l, ] <- tmp$surv[ordre]
