@@ -53,15 +53,26 @@ cov <- rbinom(100, 1, 0.5)
 dd <- data.frame(time, ev, cov)
 
 set.seed(1440293)
-dat.kmi <- kmi(Surv(time, ev != 0) ~ 1, dd, etype = ev, nimp = 100)
-
-for (i in 1:3) print(dat.kmi$imputed.data[[i]])
+dat.kmi <- kmi(Surv(time, ev != 0) ~ 1, dd, etype = ev, nimp = 5)
 
 fit.kmi <- cox.kmi(Surv(time, ev == 1) ~ cov, dat.kmi)
 
 fit.kmi
 
 summary(fit.kmi)
+
+## avec bootstrap
+
+set.seed(867988)
+dat.kmib <- kmi(Surv(time, ev != 0) ~ 1, dd, etype = ev, nimp = 5,
+                boot = TRUE, nboot = 5)
+
+fit.kmib <- cox.kmi(Surv(time, ev == 1) ~ cov, dat.kmib)
+
+fit.kmib
+
+summary(fit.kmib)
+
 
 
 ### test 4
@@ -78,6 +89,33 @@ icu.pneu$ev[icu.pneu$status == 0] <- 0
 set.seed(1313)
 dat2 <- kmi(Surv(entry, exit, ev != 0) ~ 1, data = icu.pneu,
            etype = ev, id= id, failcode = 3, nimp = 5)
+
+a <- logical(5)
+for (i in 1:5) a[i] <- all.equal(dat$imputed.data[[i]][, 1], dat2$imputed.data[[i]][, 1])
+a
+
+fit.kmi <- cox.kmi(Surv(entry, exit, event == 3) ~ pneu, dat)
+
+fit.kmi2 <- cox.kmi(Surv(entry, exit, ev == 3) ~ pneu, dat2)
+
+all.equal(fit.kmi$coefficients, fit.kmi2$coefficients)
+all.equal(fit.kmi$variance, fit.kmi2$variance)
+
+fit.kmi
+
+fit.kmi2
+
+## avec bootstrap
+
+set.seed(598085)
+dat <- kmi(Surv(entry, exit, status) ~ 1, data = icu.pneu,
+           etype = event, id= id, failcode = 3, nimp = 5,
+           boot = TRUE, nboot = 5)
+
+set.seed(598085)
+dat2 <- kmi(Surv(entry, exit, ev != 0) ~ 1, data = icu.pneu,
+            etype = ev, id= id, failcode = 3, nimp = 5,
+            boot = TRUE, nboot = 5)
 
 a <- logical(5)
 for (i in 1:5) a[i] <- all.equal(dat$imputed.data[[i]][, 1], dat2$imputed.data[[i]][, 1])
