@@ -23,6 +23,7 @@
       ICU.}
     \item{\code{pneu}}{Nosocomial pneumonia indicator}
   }
+}
 \source{
   Beyersmann, J., Gastmeier, P., Grundmann, H.,
   Baerwolff, S., Geffers, C., Behnke, M.,

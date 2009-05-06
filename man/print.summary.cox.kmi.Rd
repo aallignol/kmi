@@ -5,7 +5,7 @@
   Print method for \code{summary.cox.kmi} objects.
 }
 \usage{
-\S3method{print}summary.cox.kmi}(x,
+\S3method{print}{summary.cox.kmi}(x,
 digits = max(getOption("digits") - 3, 3),
 print.ind = FALSE, ...)
 }
