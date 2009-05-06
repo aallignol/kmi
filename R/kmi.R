@@ -1,12 +1,13 @@
 kmi <- function(formula, data, id = NULL, etype, failcode = 1, nimp = 10, epsilon = 1,
-                bootstrap = FALSE, nboot = 10, index) {
+                bootstrap = FALSE, nboot = 10) {
+    if (missing(data)) stop("A data frame in which to interpret the formula must be supplied")
+    if (missing(etype)) stop("'etype' is missing, with no default")
     Call <- match.call()
     arg.etype <- deparse(substitute(etype))
     if ((mode(Call[[2]]) == 'call' &&  Call[[2]][[1]] == as.name('Surv'))
         || inherits(formula, 'Surv'))  {
         stop("'kmi' requires a formula as the first argument")
     }
-    if (missing(etype)) stop()
     mfnames <- c('formula', 'data', 'id', 'etype')
     temp <- Call[c(1, match(mfnames, names(Call), nomatch=0))]
     temp[[1]] <- as.name("model.frame")
@@ -17,6 +18,9 @@ kmi <- function(formula, data, id = NULL, etype, failcode = 1, nimp = 10, epsilo
     id <- model.extract(m, "id")
     etype <- model.extract(m, "etype")
     aa <- Call[[2]][[2]]
+    if (attr(Y, "type") %in% c("interval", "interval2", "left")) {
+        stop("kmi can only handle right censored data")
+    }
     if (attr(Y, "type") == "counting" && !is.null(id)) {
         info <- c(as.character(aa[[3]])[as.character(aa[[3]]) %in% names(data)],
                   arg.etype)

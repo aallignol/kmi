@@ -2,7 +2,7 @@ kmi.classic <- function(y, etype, failcode, epsilon,
                         bootstrap, nboot, index) {
     if (!is.Surv(y)) stop("y must be a Surv object")
     if (attr(y, "type") != "right") stop("Can only handle right censored data")
-    if (is.null(etype)) stop()
+    if (is.null(etype)) stop("Argument 'etype' is missing with no default")
     etype[y[, 2] == 0] <- 0
     cens.times <- sort(unique(y[, 1][y[, 2] == 0]))
     indice <- seq_along(etype)
