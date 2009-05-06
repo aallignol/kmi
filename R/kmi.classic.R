@@ -1,5 +1,5 @@
 kmi.classic <- function(y, etype, failcode, epsilon,
-                        bootstrap, nboot, index) {
+                        bootstrap, nboot) {
     if (!is.Surv(y)) stop("y must be a Surv object")
     if (attr(y, "type") != "right") stop("Can only handle right censored data")
     if (is.null(etype)) stop("Argument 'etype' is missing with no default")
@@ -11,12 +11,10 @@ kmi.classic <- function(y, etype, failcode, epsilon,
     itimes <- y[-ind, 1]
     otimes <- y[ind, 1]
     if (bootstrap) {
-        if (missing(index)) {
-            index <- lapply(seq_len(nboot), function(k) {
-                sample(seq_len(nrow(y)), nrow(y),
-                       replace = TRUE)
-            })
-        }
+        index <- lapply(seq_len(nboot), function(k) {
+            sample(seq_len(nrow(y)), nrow(y),
+                   replace = TRUE)
+        })
         g <- matrix(0, nrow = nboot, ncol = length(cens.times))
         for (l in seq_len(nboot)) {
             tmp <- summary(survfit(Surv(y[index[[l]], 1], y[index[[l]], 2] == 0) ~ 1))

@@ -8,7 +8,7 @@
 }
 \usage{
 kmi(formula, data, id = NULL, etype, failcode = 1, nimp = 10,
-    epsilon = 1, bootstrap = FALSE, nboot = 10, index)
+    epsilon = 1, bootstrap = FALSE, nboot = 10)
 }
 \arguments{
   \item{formula}{A \code{formula} object, that must have a \code{Surv}
@@ -31,9 +31,6 @@ kmi(formula, data, id = NULL, etype, failcode = 1, nimp = 10,
     distribution using bootstrap samples. Default is FALSE.}
   \item{nboot}{If \code{bootstrap} is set to TRUE, \code{nboot}
     determines the number of bootstrap samples.}
-  \item{index}{Index for the bootstrapping. If supplied, must be a list
-    of length \code{nboot}. Otherwise an index is drawn with
-    replacement.}
 }
 \details{
   It was shown that if censoring times are observed for all individuals,

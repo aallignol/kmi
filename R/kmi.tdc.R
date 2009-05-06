@@ -1,5 +1,5 @@
 kmi.tdc <- function(y, etype, id, failcode, epsilon,
-                    bootstrap, nboot, index) {
+                    bootstrap, nboot) {
     y <- y[order(id, y[, 2]), ]
     etype[y[, 3] == 0] <- 0
     masque <- rbind(1, apply(as.matrix(id), 2, diff))
@@ -12,12 +12,10 @@ kmi.tdc <- function(y, etype, id, failcode, epsilon,
     itimes <- y[-ind, 2]
     otimes <- y[ind, 2]
     if (bootstrap) {
-        if (missing(index)) {
-            index <- lapply(seq_len(nboot), function(k) {
-                sample(seq_len(nrow(ysub)), nrow(ysub), 
-                       replace = TRUE)
-            })
-        }
+        index <- lapply(seq_len(nboot), function(k) {
+            sample(seq_len(nrow(ysub)), nrow(ysub), 
+                   replace = TRUE)
+        })
         g <- matrix(0, nrow = nboot, ncol = length(cens.times))
         for (l in seq_len(nboot)) {
             tmp <- summary(survfit(Surv(ysub[index[[l]], 2], ysub[index[[l]], 3] == 0) ~ 1))
