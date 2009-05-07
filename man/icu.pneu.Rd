@@ -8,7 +8,8 @@
   stay. Patients were included in the study if they had stayed at least
   2 days in the unit. The sample includes information to assess the
   effect on nosocomial pneumonia on the length of stay. The endpoint is
-  either discharge alive from the ICU or dead in the unit.
+  either discharge alive from the ICU or dead in the unit. These data
+  are censoring complete as the censoring time is known for all patients.
 }
 \usage{data(icu.pneu)}
 \format{
@@ -22,6 +23,8 @@
     \item{\code{event}}{Event type. 2 is discharge alive, 3 is death in
       ICU.}
     \item{\code{pneu}}{Nosocomial pneumonia indicator}
+    \item{\code{adm.cens.exit}}{Exit times for patients discharged alive
+      are replaced by their administrative censoring times.
   }
 }
 \source{
@@ -31,6 +34,11 @@
   models to assess prolongation of intensive care unit stay due to
   nosocomial infection. \emph{Infection Control and Hospital
   Epidemiology}, 27:493-499, 2006.
+}
+\references{
+  Beyersmann, J. and Schumacher, M. (2008). Time-dependent covariates in
+  the proportional hazards model for competing
+  risks. \emph{Biostatistics}, 9:765--776.
 }
 \examples{
 data(icu.pneu)

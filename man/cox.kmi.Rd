@@ -53,6 +53,13 @@ imp.dat <- kmi(Surv(entry, exit, status) ~ 1, data = icu.pneu,
                etype = event, id = id, failcode = 3, nimp = 5)
 
 fit.kmi <- cox.kmi(Surv(entry, exit, event == 3) ~ pneu, imp.dat)
+
+summary(fit.kmi)
+
+### Now using the censoring-complete data
+fit <- coxph(Surv(entry, adm.cens.exit, event == 3) ~ pneu, icu.pneu)
+
+summary(fit)
 }
 \keyword{survival}
 \keyword{models}
