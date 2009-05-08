@@ -1,3 +1,8 @@
+2009-5-8 Arthur Allignol <arthur.allignol@fdm.uni-freiburg.de>
+
+* A t-test and associated p-value are computed in print.cox.kmi
+and summary.cox.kmi
+	
 2009-5-6 Arthur Allignol <arthur.allignol@fdm.uni-freiburg.de>
 
 * New user interface.

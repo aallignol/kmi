@@ -94,8 +94,8 @@ cox.kmi(formula = Surv(time, ev == 1) ~ cov, x = dat.kmi)
 *****************
 Pooled estimates:
 *****************
-          coef exp(coef)  se(coef)
-cov -0.2538521 0.7758065 0.3735394
+          coef exp(coef)  se(coef)          t         p
+cov -0.2538521 0.7758065 0.3735394 -0.6795859 0.4967838
 
 > 
 > summary(fit.kmi)
@@ -106,8 +106,8 @@ cox.kmi(formula = Surv(time, ev == 1) ~ cov, x = dat.kmi)
 *****************
 Pooled estimates:
 *****************
-       coef exp(coef) se(coef)
-cov -0.2539    0.7758    0.374
+       coef exp(coef) se(coef)     t Pr(>|t|)
+cov -0.2539    0.7758   0.3735 -0.68    0.497
 
     exp(coef) exp(-coef) lower .95 upper .95
 cov    0.7758      1.289    0.3730     1.613
@@ -128,8 +128,8 @@ cox.kmi(formula = Surv(time, ev == 1) ~ cov, x = dat.kmib)
 *****************
 Pooled estimates:
 *****************
-          coef exp(coef)  se(coef)
-cov -0.2216016 0.8012345 0.3743375
+          coef exp(coef)  se(coef)          t         p
+cov -0.2216016 0.8012345 0.3743375 -0.5919834 0.5538821
 
 > 
 > summary(fit.kmib)
@@ -140,8 +140,8 @@ cox.kmi(formula = Surv(time, ev == 1) ~ cov, x = dat.kmib)
 *****************
 Pooled estimates:
 *****************
-       coef exp(coef) se(coef)
-cov -0.2216    0.8012    0.374
+       coef exp(coef) se(coef)      t Pr(>|t|)
+cov -0.2216    0.8012   0.3743 -0.592    0.554
 
     exp(coef) exp(-coef) lower .95 upper .95
 cov    0.8012      1.248    0.3846     1.669
@@ -185,8 +185,8 @@ cox.kmi(formula = Surv(entry, exit, event == 3) ~ pneu, x = dat)
 *****************
 Pooled estimates:
 *****************
-         coef exp(coef)  se(coef)
-pneu1 1.10382  3.015664 0.2398608
+         coef exp(coef)  se(coef)       t            p
+pneu1 1.10382  3.015664 0.2398608 4.60192 4.186147e-06
 
 > 
 > fit.kmi2
@@ -196,8 +196,8 @@ cox.kmi(formula = Surv(entry, exit, ev == 3) ~ pneu, x = dat2)
 *****************
 Pooled estimates:
 *****************
-         coef exp(coef)  se(coef)
-pneu1 1.10382  3.015664 0.2398608
+         coef exp(coef)  se(coef)       t            p
+pneu1 1.10382  3.015664 0.2398608 4.60192 4.186147e-06
 
 > 
 > ## avec bootstrap
@@ -233,8 +233,8 @@ cox.kmi(formula = Surv(entry, exit, event == 3) ~ pneu, x = dat)
 *****************
 Pooled estimates:
 *****************
-         coef exp(coef)  se(coef)
-pneu1 1.10376  3.015483 0.2398535
+         coef exp(coef)  se(coef)        t            p
+pneu1 1.10376  3.015483 0.2398535 4.601809 4.188386e-06
 
 > 
 > fit.kmi2
@@ -244,7 +244,7 @@ cox.kmi(formula = Surv(entry, exit, ev == 3) ~ pneu, x = dat2)
 *****************
 Pooled estimates:
 *****************
-         coef exp(coef)  se(coef)
-pneu1 1.10376  3.015483 0.2398535
+         coef exp(coef)  se(coef)        t            p
+pneu1 1.10376  3.015483 0.2398535 4.601809 4.188386e-06
 
 > 

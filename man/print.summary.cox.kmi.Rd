@@ -13,7 +13,7 @@ print.ind = FALSE, ...)
 \arguments{
   \item{x}{An object of class \code{summary.cox.kmi}.}
   \item{digits}{Significant digits to print.}
-  \item{signif.stars}{Logical. If TRUE, ‘significance stars’ are
+  \item{signif.stars}{Logical. If TRUE, 'significance stars' are
     printed for each coefficient.}
   \item{print.ind}{Logical specifying whether to print a summary of the
     models fitted on each imputed data set. Default is FALSE}
