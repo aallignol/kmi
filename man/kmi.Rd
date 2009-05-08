@@ -12,7 +12,7 @@ kmi(formula, data, id = NULL, etype, failcode = 1, nimp = 10,
 }
 \arguments{
   \item{formula}{A \code{formula} object, that must have a \code{Surv}
-    object at the left of a ~ operator. The right hand side should be 1.}
+    object at the left of a \code{~} operator. The right hand side should be 1.}
   \item{data}{A data.frame in which to interpret the variables given in
     the formula, etype and id. It is mandatory.}
   \item{id}{Used to identify individual subjects when one subject can
@@ -26,7 +26,7 @@ kmi(formula, data, id = NULL, etype, failcode = 1, nimp = 10,
     will be performed on the other competing events. Default is 1.}
   \item{nimp}{Number of multiple imputation. Default is 10.}
   \item{epsilon}{When the last time is an event, a censoring time equal
-    to max(time) + epsilon is added. By default, epsilon is set to 1.}
+    to \code{max(time) + epsilon} is added. By default, epsilon is set to 1.}
   \item{bootstrap}{Logical. Whether to estimate the censoring
     distribution using bootstrap samples. Default is FALSE.}
   \item{nboot}{If \code{bootstrap} is set to TRUE, \code{nboot}
@@ -35,7 +35,7 @@ kmi(formula, data, id = NULL, etype, failcode = 1, nimp = 10,
 \details{
   It was shown that if censoring times are observed for all individuals,
   methods for standard right-censored survival data can be used to
-  analyze cumulative incidence functions from competing risks (Fine and
+  analyse cumulative incidence functions from competing risks (Fine and
   Gray 1999). Therefore the idea proposed by Ruan and Gray (2008) is to
   impute potential censoring times for individuals who have failed from
   the competing events. The censoring times are imputed from the
@@ -47,10 +47,11 @@ kmi(formula, data, id = NULL, etype, failcode = 1, nimp = 10,
 \value{
   An object of class \code{kmi} with the following components:
   \item{imputed.data}{A list of matrix giving the imputed times in the
-  first column and the imputed events in the second column.}
+  first column and imputed event type in the second column. The event
+  status for imputed times take value 0 (censored).}
   \item{original.data}{The original data set}
   \item{info}{Gives the names of the time and event indicator column in
-  data.}
+    the original data set.}
   \item{call}{The matched call.}
 }
 \references{Ruan, P.K. and Gray, R.J. (2008). Analyses of cumulative
@@ -66,8 +67,8 @@ kmi(formula, data, id = NULL, etype, failcode = 1, nimp = 10,
   This multiple imputation technique does not work for left-truncated
   data.
 }
-\seealso{\code{\link{cox.kmi}}, \code{\link[survival]{Surv}},
-  \code{\link[survival]{survfit}}}
+\seealso{\code{\link{icu.pneu}}, \code{\link{cox.kmi}},
+  \code{\link[survival]{Surv}},  \code{\link[survival]{survfit}}}
 \examples{
 data(icu.pneu)
 

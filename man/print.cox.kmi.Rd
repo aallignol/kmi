@@ -10,7 +10,7 @@
 \arguments{
   \item{x}{An object of class \code{cox.kmi}.}
   \item{print.ind}{A logical specifying whether to print the results of
-    the analysis performed on each imputed data set. By default, only
+    the analyses performed on each imputed data set. By default, only
     the pooled estimates are printed.}
   \item{\dots}{Further arguments}
 }
