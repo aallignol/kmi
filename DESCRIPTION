@@ -1,5 +1,5 @@
 Package: kmi
-Version: 0.3
+Version: 0.3-1
 Date: 2009.5.5
 Title: Kaplan-Meier multiple imputation for the analysis of cumulative incidence functions in the competing risks setting
 Author: Arthur Allignol <arthur.allignol@fdm.uni-freiburg.de>
