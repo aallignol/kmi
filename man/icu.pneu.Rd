@@ -7,7 +7,7 @@
   at analysing the effect of nosocomial infections on the length of ICU
   stay. Patients were included in the study if they had stayed at least
   2 days in the unit. The sample includes information to assess the
-  effect on nosocomial pneumonia on the length of stay. The endpoint is
+  effect of nosocomial pneumonia on the length of stay. The endpoint is
   either discharge alive from the ICU or dead in the unit. These data
   are censoring complete as the censoring time is known for all patients.
 }

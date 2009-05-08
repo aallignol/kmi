@@ -5,7 +5,7 @@
 \description{
   This function fits Cox proportional hazards models to each imputed
   data sets to estimate the regression coefficients in a proportional
-  subdistribution hazards model, and pooled the results.
+  subdistribution hazards model, and pools the results.
 }
 \usage{
 cox.kmi(formula, x, df.complete = Inf, ...)

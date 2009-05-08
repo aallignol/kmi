@@ -35,7 +35,7 @@ summary.cox.kmi         Summary method for cox.kmi objects
 
 The \code{kmi} function performs the imputation, while \code{cox.kmi} is
 a wrapper of the \code{coxph} function that performs the Cox analysis for
-the subdistribution hazard on each imputed data set, then pooled the
+the subdistribution hazard on each imputed data set, then pools the
 results.
 
 }

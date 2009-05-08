@@ -26,7 +26,8 @@ kmi(formula, data, id = NULL, etype, failcode = 1, nimp = 10,
     will be performed on the other competing events. Default is 1.}
   \item{nimp}{Number of multiple imputation. Default is 10.}
   \item{epsilon}{When the last time is an event, a censoring time equal
-    to \code{max(time) + epsilon} is added. By default, epsilon is set to 1.}
+    to \code{max(time) + epsilon} is added. By default, \code{epsilon}
+    is set to 1.}
   \item{bootstrap}{Logical. Whether to estimate the censoring
     distribution using bootstrap samples. Default is FALSE.}
   \item{nboot}{If \code{bootstrap} is set to TRUE, \code{nboot}
