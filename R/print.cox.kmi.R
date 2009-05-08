@@ -9,8 +9,9 @@ print.cox.kmi <- function(x, print.ind = FALSE, ...) {
     dput(x$call); cat("\n")
     coef <- x$coefficients
     se <- sqrt(diag(x$variance))
-    tmp <- cbind(coef, exp(coef), se)
-    dimnames(tmp) <- list(names(coef), c("coef", "exp(coef)", "se(coef)"))
+    tmp <- cbind(coef, exp(coef), se, x$coefficients / sqrt(diag(x$variance)),
+                 2 * pt(abs(x$coefficients / sqrt(diag(x$variance))), df = x$df, lower.tail = FALSE))
+    dimnames(tmp) <- list(names(coef), c("coef", "exp(coef)", "se(coef)", "t", "p"))
     cat("*****************\n")
     cat("Pooled estimates:\n")
     cat("*****************\n")

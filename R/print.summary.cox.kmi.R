@@ -1,4 +1,5 @@
 print.summary.cox.kmi <- function(x, digits = max(getOption("digits") - 3, 3),
+                                  signif.stars = getOption("show.signif.stars"),
                                   print.ind = FALSE, ...) {
     if (!inherits(x, "summary.cox.kmi")) {
         stop("'x' must be of class 'kmi'")
@@ -12,7 +13,7 @@ print.summary.cox.kmi <- function(x, digits = max(getOption("digits") - 3, 3),
     cat("*****************\n")
     cat("Pooled estimates:\n")
     cat("*****************\n")
-    printCoefmat(x$coefficients, digits = digits, ...)
+    printCoefmat(x$coefficients, digits = digits, signif.stars=signif.stars, ...)
     cat("\n")
     print(x$conf.int)
     cat("\n")

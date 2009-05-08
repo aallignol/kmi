@@ -9,8 +9,10 @@ summary.cox.kmi <- function(object, conf.int = 0.95, scale = 1, ...) {
     rval$call <- object$call
     beta <- object$coefficients
     se.beta <- sqrt(diag(object$var))
-    tmp <- cbind(beta, exp(beta), se.beta)
-    dimnames(tmp) <- list(names(beta), c("coef", "exp(coef)", "se(coef)"))
+    tmp <- cbind(beta, exp(beta), se.beta, beta / se.beta,
+                 2 * pt(abs(beta / se.beta), df = object$df, lower.tail = FALSE))
+    dimnames(tmp) <- list(names(beta), c("coef", "exp(coef)", "se(coef)",
+                                         "t", "Pr(>|t|)"))
     rval$coefficients <- tmp
     z <- -qt((1 + conf.int)/2, object$df, lower = FALSE)
     tmp <- cbind(exp(beta), exp(-beta), exp(beta - z * se.beta),
