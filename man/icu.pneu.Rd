@@ -24,7 +24,7 @@
       ICU.}
     \item{\code{pneu}}{Nosocomial pneumonia indicator}
     \item{\code{adm.cens.exit}}{Exit times for patients discharged alive
-      are replaced by their administrative censoring times.
+      are replaced by their administrative censoring times.}
   }
 }
 \source{
