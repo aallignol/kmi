@@ -1,10 +1,10 @@
 \name{kmi}
 \alias{kmi}
-\title{Kaplan-Meier multiple imputation for competing risks}
+\title{Kaplan-Meier Multiple Imputation for Competing Risks}
 \description{
-  The function computes a Kaplan-Meier multiple imputation method that
-  recovers the missing potential censoring information from competing
-  risks failure times for the analysis of cumulative incidence functions.
+  The function performs a non parametric multiple imputation that aims
+  at recovering the missing potential censoring times from competing
+  events.
 }
 \usage{
 kmi(formula, data, id = NULL, etype, failcode = 1, nimp = 10,
@@ -22,7 +22,7 @@ kmi(formula, data, id = NULL, etype, failcode = 1, nimp = 10,
     \code{status == 1} in \code{formula}, \code{etype} describes the
     type of event, otherwise, for censored observation, (\code{status ==
       0}), the value of \code{etype} is ignored.}
-  \item{failcode}{Indicates the failure time of interest. Imputation
+  \item{failcode}{Indicates the failure cause of interest. Imputation
     will be performed on the other competing events. Default is 1.}
   \item{nimp}{Number of multiple imputation. Default is 10.}
   \item{epsilon}{When the last time is an event, a censoring time equal
