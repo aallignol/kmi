@@ -1,21 +1,21 @@
 \name{cox.kmi}
 \alias{cox.kmi}
 
-\title{Cox proportional hazard model applied to imputed data sets}
+\title{Cox proportional hazards model applied to imputed data sets}
 \description{
   This function fits Cox proportional hazards models to each imputed
-  data sets to estimate the regression coefficients in a proportional
+  data set to estimate the regression coefficients in a proportional
   subdistribution hazards model, and pools the results.
 }
 \usage{
-cox.kmi(formula, x, df.complete = Inf, ...)
+cox.kmi(formula, imp.data, df.complete = Inf, ...)
 }
 \arguments{
   \item{formula}{A formula object, with the response on the left of a
     \code{~} operator, and the terms on the right. The response must be
     a survival object as returned by the \code{\link[survival]{Surv}}
     function.}
-  \item{x}{An object of class \code{kmi}.}
+  \item{imp.data}{An object of class \code{kmi}.}
   \item{df.complete}{Complete data degrees of freedom.}
   \item{\dots}{Further arguments for the \code{\link[survival]{coxph}}
     function.}
@@ -37,12 +37,6 @@ cox.kmi(formula, x, df.complete = Inf, ...)
     imputed data set.}
 }
 \author{Arthur Allignol, \email{arthur.allignol@fdm.uni-freiburg.de}}
-\note{
-  The \code{data} argument in \code{coxph} must not be supplied.
-  However the complete data set with the covariates must be supplied in
-  the call to the \code{kmi} function which is then copied in the
-  \code{kmi} object used in \code{cox.kmi}.
-}
 \seealso{\code{\link[survival]{coxph}},
   \code{\link[mitools]{MIcombine}}, \code{\link{print.cox.kmi}},
   \code{\link{summary.cox.kmi}}}

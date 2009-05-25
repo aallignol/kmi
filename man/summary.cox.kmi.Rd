@@ -20,8 +20,12 @@
   An object of class \code{summary.cox.kmi} with the following
   components:
   \item{call}{The matched call}
-  \item{coefficients}{Coefficients}
-  \item{conf.int}{Confidence intervals}
+  \item{coefficients}{A matrix with 5 columns including the regression
+    coefficients, subdistribution hazard ratios, standard-errors,
+    t-statistics and corresponding two-sided p-values.}
+  \item{conf.int}{A matrix with 4 columns that consists of the
+    subdistribution hazard ratios, exp(-coef) and the lower and upper
+    bounds of the confidence interval.}
   \item{individual.fit}{A list of \code{summary.coxph} objects for each
     imputed data set}
 }

@@ -1,13 +1,13 @@
-cox.kmi <- function(formula, x, df.complete = Inf, ...) {
+cox.kmi <- function(formula, imp.data, df.complete = Inf, ...) {
     if (!inherits(x, "kmi")) {
         stop("'x' must be of class 'kmi'")
     }
     call <- match.call()
-    info <- x$info # that's where we have the column names (time, event)
-    result <- lapply(seq_along(x$imputed.data), function(i) {
-        daten <- x$original.data
-        daten[, info[1]] <- x$imputed.data[[i]][, 1]
-        daten[, info[2]] <- x$imputed.data[[i]][, 2]
+    info <- imp.data$info # that's where we have the column names (time, event)
+    result <- lapply(seq_along(imp.data$imputed.data), function(i) {
+        daten <- imp.data$original.data
+        daten[, info[1]] <- imp.data$imputed.data[[i]][, 1]
+        daten[, info[2]] <- imp.data$imputed.data[[i]][, 2]
         tmp <- coxph(formula, data = daten, ...)
         tmp
     })

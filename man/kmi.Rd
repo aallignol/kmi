@@ -12,7 +12,7 @@ kmi(formula, data, id = NULL, etype, failcode = 1, nimp = 10,
 }
 \arguments{
   \item{formula}{A \code{formula} object, that must have a \code{Surv}
-    object at the left of a \code{~} operator. The right hand side should be 1.}
+    object on the left of a \code{~} operator. The right hand side should be 1.}
   \item{data}{A data.frame in which to interpret the variables given in
     the formula, etype and id. It is mandatory.}
   \item{id}{Used to identify individual subjects when one subject can
@@ -46,11 +46,11 @@ kmi(formula, data, id = NULL, etype, failcode = 1, nimp = 10,
   bootstrapping.
 
   The competing risks model formulation in \code{formula} mimics the one
-  in \code{survfit}.
+  in \code{\link[survival]{survfit}}.
 }
 \value{
   An object of class \code{kmi} with the following components:
-  \item{imputed.data}{A list of matrix giving the imputed times in the
+  \item{imputed.data}{A list of matrices giving the imputed times in the
   first column and imputed event type in the second column. The event
   status for imputed times take value 0 (censored).}
   \item{original.data}{The original data set}
