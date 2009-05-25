@@ -11,7 +11,7 @@
 \arguments{
   \item{object}{An object of class \code{cox.kmi}.}
   \item{conf.int}{Level of the confidence intervals. Default is 0.95}
-  \item{scale}{Vector of scale factors for the coefficients, defaults to
+  \item{scale}{Vector of scale factors for the coefficients, default to
     1. The confidence limits are for the risk change associated with one
     scale unit.}
   \item{\dots}{Further arguments}

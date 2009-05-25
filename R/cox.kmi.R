@@ -1,6 +1,6 @@
 cox.kmi <- function(formula, imp.data, df.complete = Inf, ...) {
-    if (!inherits(x, "kmi")) {
-        stop("'x' must be of class 'kmi'")
+    if (!inherits(imp.data, "kmi")) {
+        stop("'imp.data' must be of class 'kmi'")
     }
     call <- match.call()
     info <- imp.data$info # that's where we have the column names (time, event)

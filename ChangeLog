@@ -1,5 +1,6 @@
 2009-5-25 Arthur Allignol <arthur.allignol@fdm.uni-freiburg.de>
 
+* Argument x in cox.kmi is replaced by imp.data
 * Slight improvement of the documentation
 * Ready for release
 	

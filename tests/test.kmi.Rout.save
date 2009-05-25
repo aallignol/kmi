@@ -89,7 +89,7 @@ Loading required package: mitools
 > 
 > fit.kmi
 Call:
-cox.kmi(formula = Surv(time, ev == 1) ~ cov, x = dat.kmi)
+cox.kmi(formula = Surv(time, ev == 1) ~ cov, imp.data = dat.kmi)
 
 *****************
 Pooled estimates:
@@ -100,7 +100,7 @@ cov -0.2538521 0.7758065 0.3735394 -0.6795859 0.4967838
 > 
 > summary(fit.kmi)
 Call:
-cox.kmi(formula = Surv(time, ev == 1) ~ cov, x = dat.kmi)
+cox.kmi(formula = Surv(time, ev == 1) ~ cov, imp.data = dat.kmi)
 
 
 *****************
@@ -123,7 +123,7 @@ cov    0.7758      1.289    0.3730     1.613
 > 
 > fit.kmib
 Call:
-cox.kmi(formula = Surv(time, ev == 1) ~ cov, x = dat.kmib)
+cox.kmi(formula = Surv(time, ev == 1) ~ cov, imp.data = dat.kmib)
 
 *****************
 Pooled estimates:
@@ -134,7 +134,7 @@ cov -0.2216016 0.8012345 0.3743375 -0.5919834 0.5538821
 > 
 > summary(fit.kmib)
 Call:
-cox.kmi(formula = Surv(time, ev == 1) ~ cov, x = dat.kmib)
+cox.kmi(formula = Surv(time, ev == 1) ~ cov, imp.data = dat.kmib)
 
 
 *****************
@@ -180,7 +180,7 @@ cov    0.8012      1.248    0.3846     1.669
 > 
 > fit.kmi
 Call:
-cox.kmi(formula = Surv(entry, exit, event == 3) ~ pneu, x = dat)
+cox.kmi(formula = Surv(entry, exit, event == 3) ~ pneu, imp.data = dat)
 
 *****************
 Pooled estimates:
@@ -191,7 +191,7 @@ pneu1 1.10382  3.015664 0.2398608 4.60192 4.186147e-06
 > 
 > fit.kmi2
 Call:
-cox.kmi(formula = Surv(entry, exit, ev == 3) ~ pneu, x = dat2)
+cox.kmi(formula = Surv(entry, exit, ev == 3) ~ pneu, imp.data = dat2)
 
 *****************
 Pooled estimates:
@@ -228,7 +228,7 @@ pneu1 1.10382  3.015664 0.2398608 4.60192 4.186147e-06
 > 
 > fit.kmi
 Call:
-cox.kmi(formula = Surv(entry, exit, event == 3) ~ pneu, x = dat)
+cox.kmi(formula = Surv(entry, exit, event == 3) ~ pneu, imp.data = dat)
 
 *****************
 Pooled estimates:
@@ -239,7 +239,7 @@ pneu1 1.10376  3.015483 0.2398535 4.601809 4.188386e-06
 > 
 > fit.kmi2
 Call:
-cox.kmi(formula = Surv(entry, exit, ev == 3) ~ pneu, x = dat2)
+cox.kmi(formula = Surv(entry, exit, ev == 3) ~ pneu, imp.data = dat2)
 
 *****************
 Pooled estimates:
