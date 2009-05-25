@@ -15,7 +15,7 @@
 \details{
 \tabular{ll}{
 Package: \tab kmi\cr
-Version: \tab 0.3\cr
+Version: \tab 0.3-2\cr
 Date: \tab 2009\cr
 Depends: \tab survival, mitools\cr
 License: \tab GPL (>= 2)\cr

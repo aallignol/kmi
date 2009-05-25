@@ -1,3 +1,8 @@
+2009-5-25 Arthur Allignol <arthur.allignol@fdm.uni-freiburg.de>
+
+* Slight improvement of the documentation
+Ready for release
+	
 2009-5-8 Arthur Allignol <arthur.allignol@fdm.uni-freiburg.de>
 
 * A t-test and associated p-value are computed in print.cox.kmi
