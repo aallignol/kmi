@@ -44,6 +44,9 @@ kmi(formula, data, id = NULL, etype, failcode = 1, nimp = 10,
 
   Estimation of the censoring distribution may be improved through
   bootstrapping.
+
+  The competing risks model formulation in \code{formula} mimics the one
+  in \code{survfit}.
 }
 \value{
   An object of class \code{kmi} with the following components:
@@ -76,7 +79,8 @@ data(icu.pneu)
 dat <- kmi(Surv(entry, exit, status) ~ 1, data = icu.pneu,
            etype = event, id= id, failcode = 3, nimp = 5)
 
-## another way to specify the formula
+## another way to specify the formula if there is no status
+## variable
 icu.pneu$ev <- icu.pneu$event
 icu.pneu$ev[icu.pneu$status == 0] <- 0
 
