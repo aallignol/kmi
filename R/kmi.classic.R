@@ -8,7 +8,7 @@ kmi.classic <- function(y, etype, failcode, epsilon,
     if (is.null(etype)) stop("Argument 'etype' is missing with no default")
     ## Depending on how the model is specified (see example(survfit)),
     ## etype might not be 0 when the observation is censored
-    etype[y[, 2] == 0] <- 0
+    ## etype[y[, 2] == 0] <- 0
     cens.times <- sort(unique(y[, 1][y[, 2] == 0]))
     ind <- which(y[, 2] == 0 | etype == failcode)
     ## itimes are the time that need imputation

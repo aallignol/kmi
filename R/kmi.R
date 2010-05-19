@@ -1,14 +1,17 @@
 kmi <- function(formula, data, id = NULL, etype, failcode = 1, nimp = 10, epsilon = 1,
                 bootstrap = FALSE, nboot = 10) {
+    
     if (missing(data)) stop("A data frame in which to interpret the formula must be supplied")
     if (missing(etype)) stop("'etype' is missing, with no default")
     Call <- match.call()
+    
     ## I'll need the name of the etype column in cox.kmi()
     arg.etype <- deparse(substitute(etype))
     if ((mode(Call[[2]]) == 'call' &&  Call[[2]][[1]] == as.name('Surv'))
         || inherits(formula, 'Surv'))  {
         stop("'kmi' requires a formula as the first argument")
     }
+    
     mfnames <- c('formula', 'data', 'id', 'etype')
     temp <- Call[c(1, match(mfnames, names(Call), nomatch=0))]
     temp[[1]] <- as.name("model.frame")
@@ -18,22 +21,32 @@ kmi <- function(formula, data, id = NULL, etype, failcode = 1, nimp = 10, epsilo
     if (!is.Surv(Y)) stop("Response must be a survival object")
     id <- model.extract(m, "id")
     etype <- model.extract(m, "etype")
+    
     ## to get the name of the 'time' column
     aa <- Call[[2]][[2]]
     if (attr(Y, "type") %in% c("interval", "interval2", "left")) {
         stop("kmi can only handle right censored data")
     }
+    
     if (attr(Y, "type") == "counting" && !is.null(id)) {
         info <- c(as.character(aa[[3]])[as.character(aa[[3]]) %in% names(data)],
                   arg.etype)
+        ## deal with etype when it's a fucking factor
+        if (!is.factor(etype)) etype <- factor(etype)
+        levels(etype) <- c(levels(etype), 0)
+        etype[Y[, 3] == 0] <- 0
+        etype <- etype[, drop = TRUE]
         ## for right-censored data with time-dependent covariates, i.e.,
         ## several rows per individual
         toimpute <- kmi.tdc(Y, id = id, etype = etype, failcode = failcode, 
                             epsilon = epsilon, bootstrap = bootstrap, nboot = nboot)
-    }
-    else {
+    } else {
         info <- c(as.character(aa[[2]])[as.character(aa[[2]]) %in% names(data)],
                   arg.etype)
+        if (!is.factor(etype)) etype <- factor(etype)
+        levels(etype) <- c(levels(etype), 0)
+        etype[Y[, 2] == 0] <- 0
+        etype <- etype[, drop = TRUE]
         ## for classical right-censored data
         toimpute <- kmi.classic(Y, etype = etype, failcode = failcode, epsilon = epsilon,
                                 bootstrap = bootstrap, nboot = nboot)
@@ -53,8 +66,8 @@ kmi <- function(formula, data, id = NULL, etype, failcode = 1, nimp = 10, epsilo
             tt[j] <- sample(cens.times, 1, replace = TRUE, prob = wp)
         }
         newtimes <- c(toimpute$otimes, tt)
-        newevent <- c(etype[toimpute$place], rep(0, length(tt)))
-        matrix(c(newtimes, newevent), ncol = 2)
+        newevent <- factor(c(levels(etype)[etype][toimpute$place], rep(0, length(tt))))
+        data.frame(newtimes, newevent)
     })
     ## we need to put the original data in the same order as the imputed times
     orig.data <- rbind(data[toimpute$place, ], data[-toimpute$place, ])
