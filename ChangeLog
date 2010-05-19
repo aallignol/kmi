@@ -1,34 +1,33 @@
 2009-5-25 Arthur Allignol <arthur.allignol@fdm.uni-freiburg.de>
 
-* Argument x in cox.kmi is replaced by imp.data
-* Slight improvement of the documentation
-* Ready for release
+	* Argument x in cox.kmi is replaced by imp.data
+	* Slight improvement of the documentation
 	
 2009-5-8 Arthur Allignol <arthur.allignol@fdm.uni-freiburg.de>
 
-* A t-test and associated p-value are computed in print.cox.kmi
-and summary.cox.kmi
+	* A t-test and associated p-value are computed in print.cox.kmi
+	and summary.cox.kmi
 	
 2009-5-6 Arthur Allignol <arthur.allignol@fdm.uni-freiburg.de>
 
-* New user interface.
-Model specification in kmi is now done using formulas and works 
-in a manner comparable to survfit for competing risks data
+	* New user interface.
+	Model specification in kmi is now done using formulas and works 
+	in a manner comparable to survfit for competing risks data
 
-* New internal functions kmi.classic (for right-censored data)
-and kmi.tdc (for right-censored data with time-dependent covariates)
-instead of one single kmi function
+	* New internal functions kmi.classic (for right-censored data)
+	and kmi.tdc (for right-censored data with time-dependent covariates)
+	instead of one single kmi function
 
-* Individual results pooling in cox.kmi() is now done using MIcombine()
-from the mitools package. 
-New argument df.complete in cox.kmi
+	* Individual results pooling in cox.kmi() is now done using MIcombine()
+	from the mitools package. 
+	New argument df.complete in cox.kmi
 
-* Inclusion of a data set icu.pneu
+	* Inclusion of a data set icu.
 	
 2009-4-17 Arthur Allignol <arthur.allignol@fdm.uni-freiburg.de>
 
-* Correct computation of the probabilities for the sampling in kmi
+	* Correct computation of the probabilities for the sampling in kmi
 	
 2009-3-4 Arthur Allignol <arthur.allignol@fdm.uni-freiburg.de>
 
-* Creation of the package
+	* Creation of the package
