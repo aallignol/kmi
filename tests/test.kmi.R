@@ -57,12 +57,8 @@ dd$status <- factor(ifelse(dd$ev == 0, "cens", ifelse(dd$ev == 1, "rel", "dc")))
 
 set.seed(1440293)
 dat.kmi <- kmi(Surv(time, ev != 0) ~ 1, dd, etype = ev, nimp = 5)
-set.seed(1440293)
-dat.kmi.fact <- kmi(Surv(time, status != "cens") ~ 1, dd, etype = status,
-                    nimp = 5, failcode = "rel")
 
 fit.kmi <- cox.kmi(Surv(time, ev == 1) ~ cov, dat.kmi)
-fit.kmi.fact <- cox.kmi(Surv(time, status == "rel") ~ cov, dat.kmi)
 
 fit.kmi
 
