@@ -52,9 +52,6 @@ ev <- sample(c(0, 1, 2), 100, replace = TRUE)
 cov <- rbinom(100, 1, 0.5)
 dd <- data.frame(time, ev, cov)
 
-## add a test when etype is a factor
-dd$status <- factor(ifelse(dd$ev == 0, "cens", ifelse(dd$ev == 1, "rel", "dc")))
-
 set.seed(1440293)
 dat.kmi <- kmi(Surv(time, ev != 0) ~ 1, dd, etype = ev, nimp = 5)
 
