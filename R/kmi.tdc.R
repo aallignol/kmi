@@ -8,7 +8,7 @@ kmi.tdc <- function(y, etype, id, failcode, epsilon,
     ## covariate status, but that doesn't mean the guy is censored
     y <- y[order(id, y[, 2]), ]
     ## etype won't necessary be 0 for censored observations
-    etype[y[, 3] == 0] <- 0
+    ## etype[y[, 3] == 0] <- 0
     ## We want to get the last row of each individual that contains the actual status
     ## at the end of the follow-up
     masque <- rbind(1, apply(as.matrix(id), 2, diff))

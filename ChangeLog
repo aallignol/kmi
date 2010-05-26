@@ -1,3 +1,9 @@
+2010-5-26 Arthur Allignol <arthur.allignol@fdm.uni-freiburg.de>
+
+	* kmi.R: Function works when etype is specified as a factor
+	* test.kmi.R: New tests to check results when etype is specified as 
+	a factor
+	
 2009-5-25 Arthur Allignol <arthur.allignol@fdm.uni-freiburg.de>
 
 	* Argument x in cox.kmi is replaced by imp.data
