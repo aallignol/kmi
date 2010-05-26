@@ -69,6 +69,7 @@ dat.kmi.mixed2 <- kmi(Surv(time, status != "cens") ~ 1, dd, etype = ev,
 
 
 fit.kmi <- cox.kmi(Surv(time, ev == 1) ~ cov, dat.kmi)
+fit.kmi.fact <- cox.kmi(Surv(time, status == "rel") ~ cov, dat.kmi)
 fit.kmi.mixed1 <- cox.kmi(Surv(time, status == "rel") ~ cov, dat.kmi.mixed1)
 fit.kmi.mixed2 <- cox.kmi(Surv(time, ev == 1) ~ cov, dat.kmi.mixed2)
 
