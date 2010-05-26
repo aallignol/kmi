@@ -1,6 +1,6 @@
 
-R version 2.9.0 (2009-04-17)
-Copyright (C) 2009 The R Foundation for Statistical Computing
+R version 2.11.0 (2010-04-22)
+Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -82,169 +82,27 @@ Loading required package: mitools
 > cov <- rbinom(100, 1, 0.5)
 > dd <- data.frame(time, ev, cov)
 > 
+> ## add a test when etype is a factor
+> dd$status <- factor(ifelse(dd$ev == 0, "cens", ifelse(dd$ev == 1, "rel", "dc")))
+> 
 > set.seed(1440293)
 > dat.kmi <- kmi(Surv(time, ev != 0) ~ 1, dd, etype = ev, nimp = 5)
+> set.seed(1440293)
+> dat.kmi.fact <- kmi(Surv(time, status != "cens") ~ 1, dd, etype = status,
++                     nimp = 5, failcode = "rel")
+> set.seed(1440293)
+> dat.kmi.mixed1 <- kmi(Surv(time, ev != 0) ~ 1, dd, etype = status,
++                       nimp = 5, failcode = "rel")
+> set.seed(1440293)
+> dat.kmi.mixed2 <- kmi(Surv(time, status != "cens") ~ 1, dd, etype = ev,
++                       nimp = 5, failcode = 1)
+> 
 > 
 > fit.kmi <- cox.kmi(Surv(time, ev == 1) ~ cov, dat.kmi)
+> fit.kmi.mixed1 <- cox.kmi(Surv(time, status == "rel") ~ cov, dat.kmi.mixed1)
+> fit.kmi.mixed2 <- cox.kmi(Surv(time, ev == 1) ~ cov, dat.kmi.mixed2)
 > 
-> fit.kmi
-Call:
-cox.kmi(formula = Surv(time, ev == 1) ~ cov, imp.data = dat.kmi)
-
-*****************
-Pooled estimates:
-*****************
-          coef exp(coef)  se(coef)          t         p
-cov -0.2538521 0.7758065 0.3735394 -0.6795859 0.4967838
-
-> 
-> summary(fit.kmi)
-Call:
-cox.kmi(formula = Surv(time, ev == 1) ~ cov, imp.data = dat.kmi)
-
-
-*****************
-Pooled estimates:
-*****************
-       coef exp(coef) se(coef)     t Pr(>|t|)
-cov -0.2539    0.7758   0.3735 -0.68    0.497
-
-    exp(coef) exp(-coef) lower .95 upper .95
-cov    0.7758      1.289    0.3730     1.613
-
-> 
-> ## avec bootstrap
-> 
-> set.seed(867988)
-> dat.kmib <- kmi(Surv(time, ev != 0) ~ 1, dd, etype = ev, nimp = 5,
-+                 boot = TRUE, nboot = 5)
-> 
-> fit.kmib <- cox.kmi(Surv(time, ev == 1) ~ cov, dat.kmib)
-> 
-> fit.kmib
-Call:
-cox.kmi(formula = Surv(time, ev == 1) ~ cov, imp.data = dat.kmib)
-
-*****************
-Pooled estimates:
-*****************
-          coef exp(coef)  se(coef)          t         p
-cov -0.2216016 0.8012345 0.3743375 -0.5919834 0.5538821
-
-> 
-> summary(fit.kmib)
-Call:
-cox.kmi(formula = Surv(time, ev == 1) ~ cov, imp.data = dat.kmib)
-
-
-*****************
-Pooled estimates:
-*****************
-       coef exp(coef) se(coef)      t Pr(>|t|)
-cov -0.2216    0.8012   0.3743 -0.592    0.554
-
-    exp(coef) exp(-coef) lower .95 upper .95
-cov    0.8012      1.248    0.3846     1.669
-
-> 
-> 
-> 
-> ### test 4
-> 
-> data(icu.pneu)
-> 
-> set.seed(1313)
-> dat <- kmi(Surv(entry, exit, status) ~ 1, data = icu.pneu,
-+            etype = event, id= id, failcode = 3, nimp = 5)
-> 
-> icu.pneu$ev <- icu.pneu$event
-> icu.pneu$ev[icu.pneu$status == 0] <- 0
-> 
-> set.seed(1313)
-> dat2 <- kmi(Surv(entry, exit, ev != 0) ~ 1, data = icu.pneu,
-+            etype = ev, id= id, failcode = 3, nimp = 5)
-> 
-> a <- logical(5)
-> for (i in 1:5) a[i] <- all.equal(dat$imputed.data[[i]][, 1], dat2$imputed.data[[i]][, 1])
-> a
-[1] TRUE TRUE TRUE TRUE TRUE
-> 
-> fit.kmi <- cox.kmi(Surv(entry, exit, event == 3) ~ pneu, dat)
-> 
-> fit.kmi2 <- cox.kmi(Surv(entry, exit, ev == 3) ~ pneu, dat2)
-> 
-> all.equal(fit.kmi$coefficients, fit.kmi2$coefficients)
-[1] TRUE
-> all.equal(fit.kmi$variance, fit.kmi2$variance)
-[1] TRUE
-> 
-> fit.kmi
-Call:
-cox.kmi(formula = Surv(entry, exit, event == 3) ~ pneu, imp.data = dat)
-
-*****************
-Pooled estimates:
-*****************
-         coef exp(coef)  se(coef)       t            p
-pneu1 1.10382  3.015664 0.2398608 4.60192 4.186147e-06
-
-> 
-> fit.kmi2
-Call:
-cox.kmi(formula = Surv(entry, exit, ev == 3) ~ pneu, imp.data = dat2)
-
-*****************
-Pooled estimates:
-*****************
-         coef exp(coef)  se(coef)       t            p
-pneu1 1.10382  3.015664 0.2398608 4.60192 4.186147e-06
-
-> 
-> ## avec bootstrap
-> 
-> set.seed(598085)
-> dat <- kmi(Surv(entry, exit, status) ~ 1, data = icu.pneu,
-+            etype = event, id= id, failcode = 3, nimp = 5,
-+            boot = TRUE, nboot = 5)
-> 
-> set.seed(598085)
-> dat2 <- kmi(Surv(entry, exit, ev != 0) ~ 1, data = icu.pneu,
-+             etype = ev, id= id, failcode = 3, nimp = 5,
-+             boot = TRUE, nboot = 5)
-> 
-> a <- logical(5)
-> for (i in 1:5) a[i] <- all.equal(dat$imputed.data[[i]][, 1], dat2$imputed.data[[i]][, 1])
-> a
-[1] TRUE TRUE TRUE TRUE TRUE
-> 
-> fit.kmi <- cox.kmi(Surv(entry, exit, event == 3) ~ pneu, dat)
-> 
-> fit.kmi2 <- cox.kmi(Surv(entry, exit, ev == 3) ~ pneu, dat2)
-> 
-> all.equal(fit.kmi$coefficients, fit.kmi2$coefficients)
-[1] TRUE
-> all.equal(fit.kmi$variance, fit.kmi2$variance)
-[1] TRUE
-> 
-> fit.kmi
-Call:
-cox.kmi(formula = Surv(entry, exit, event == 3) ~ pneu, imp.data = dat)
-
-*****************
-Pooled estimates:
-*****************
-         coef exp(coef)  se(coef)        t            p
-pneu1 1.10376  3.015483 0.2398535 4.601809 4.188386e-06
-
-> 
-> fit.kmi2
-Call:
-cox.kmi(formula = Surv(entry, exit, ev == 3) ~ pneu, imp.data = dat2)
-
-*****************
-Pooled estimates:
-*****************
-         coef exp(coef)  se(coef)        t            p
-pneu1 1.10376  3.015483 0.2398535 4.601809 4.188386e-06
-
-> 
+> all.equal(coef(fit.kmi), coef(fit.kmi.fact))
+Error in coef(fit.kmi.fact) : object 'fit.kmi.fact' not found
+Calls: all.equal ... all.equal.numeric -> attr.all.equal -> mode -> coef
+Execution halted
