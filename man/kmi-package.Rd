@@ -15,8 +15,8 @@
 \details{
 \tabular{ll}{
 Package: \tab kmi\cr
-Version: \tab 0.3-2\cr
-Date: \tab 2009\cr
+Version: \tab 0.3-3\cr
+Date: \tab 2010\cr
 Depends: \tab survival, mitools\cr
 License: \tab GPL (>= 2)\cr
 }
@@ -48,6 +48,10 @@ Maintainer: Arthur Allignol <arthur.allignol@fdm.uni-freiburg.de>
   Ruan, P.K. and Gray, R.J. (2008). Analyses of cumulative
   incidence functions via non-parametric multiple
   imputation. \emph{Statistics in Medicine}, 27(27):5709--5724.
+
+  Allignol, A. and Beyersmann, J. (2010). Software for fitting
+  nonstandard proportional subdistribution hazards
+  models. \emph{Biostatistics}, doi:10.1093/biostatistics/kxq018 
   
   Fine, J.P. and Gray, R.J. (1999). A Proportional Hazards Model for the
   Subdistribution of a Competing Risk. \emph{Journal of the American

@@ -62,6 +62,10 @@ kmi(formula, data, id = NULL, etype, failcode = 1, nimp = 10,
   incidence functions via non-parametric multiple
   imputation. \emph{Statistics in Medicine}, 27(27):5709--5724.
 
+  Allignol, A. and Beyersmann, J. (2010). Software for fitting
+  nonstandard proportional subdistribution hazards
+  models. \emph{Biostatistics}, doi:10.1093/biostatistics/kxq018 
+
   Fine, J.P. and Gray, R.J. (1999). A Proportional Hazards Model for the
   Subdistribution of a Competing Risk. \emph{Journal of the American
     Statistical Association}. 94(446):496--509.
