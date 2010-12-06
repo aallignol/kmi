@@ -13,7 +13,7 @@
 }
 \usage{data(icu.pneu)}
 \format{
-  A data frame with 1421 observations on the following 6 variables.
+  A data frame with 1421 observations on the following 8 variables.
   \describe{
     \item{\code{id}}{Individual patient id.}
     \item{\code{entry}}{Entry time into the study.}
