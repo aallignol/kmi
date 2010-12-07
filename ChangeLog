@@ -1,3 +1,8 @@
+2010-12-7 Arthur Allignol <arthur.allignol@fdm.uni-freiburg.de>
+
+	* new version number 0.3-4
+	* icu.pneu: Add 2 covariates
+
 2010-5-26 Arthur Allignol <arthur.allignol@fdm.uni-freiburg.de>
 
 	* kmi.R: Function works when etype is specified as a factor
