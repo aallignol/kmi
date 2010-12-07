@@ -25,6 +25,8 @@
     \item{\code{pneu}}{Nosocomial pneumonia indicator.}
     \item{\code{adm.cens.exit}}{Exit times for patients discharged alive
       are replaced by their administrative censoring times.}
+    \item{\code{age}}{Age at inclusion}
+    \item{\code{sex}}{Sex. \code{F} for female and \code{M} for male}
   }
 }
 \source{
