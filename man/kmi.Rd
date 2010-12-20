@@ -80,15 +80,15 @@ kmi(formula, data, id = NULL, etype, failcode = 1, nimp = 10,
 \examples{
 data(icu.pneu)
 
-dat <- kmi(Surv(entry, exit, status) ~ 1, data = icu.pneu,
-           etype = event, id= id, failcode = 3, nimp = 5)
+dat <- kmi(Surv(start, stop, status) ~ 1, data = icu.pneu,
+           etype = event, id= id, failcode = 2, nimp = 5)
 
 ## another way to specify the formula if there is no status
 ## variable
 icu.pneu$ev <- icu.pneu$event
 icu.pneu$ev[icu.pneu$status == 0] <- 0
 
-dat <- kmi(Surv(entry, exit, ev != 0) ~ 1, data = icu.pneu,
-           etype = ev, id= id, failcode = 3, nimp = 5)
+dat <- kmi(Surv(start, stop, ev != 0) ~ 1, data = icu.pneu,
+           etype = ev, id= id, failcode = 2, nimp = 5)
 }
 \keyword{survival}
