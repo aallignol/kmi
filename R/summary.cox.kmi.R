@@ -14,7 +14,7 @@ summary.cox.kmi <- function(object, conf.int = 0.95, scale = 1, ...) {
     dimnames(tmp) <- list(names(beta), c("coef", "exp(coef)", "se(coef)",
                                          "t", "Pr(>|t|)"))
     rval$coefficients <- tmp
-    z <- -qt((1 + conf.int)/2, object$df, lower = FALSE)
+    z <- -qt((1 + conf.int)/2, object$df, lower.tail = FALSE)
     tmp <- cbind(exp(beta), exp(-beta), exp(beta - z * se.beta),
                  exp(beta + z * se.beta))
     dimnames(tmp) <- list(names(beta),
