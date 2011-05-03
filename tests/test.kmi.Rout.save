@@ -1,7 +1,8 @@
 
-R version 2.11.0 (2010-04-22)
-Copyright (C) 2010 The R Foundation for Statistical Computing
+R version 2.13.0 (2011-04-13)
+Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -139,7 +140,7 @@ Pooled estimates:
 cov -0.2539    0.7758   0.3735 -0.68    0.497
 
     exp(coef) exp(-coef) lower .95 upper .95
-cov    0.7758      1.289    0.3730     1.613
+cov    0.7758      1.289     0.373     1.613
 
 > 
 > fit.kmi.fact
@@ -165,7 +166,7 @@ Pooled estimates:
 cov -0.2539    0.7758   0.3735 -0.68    0.497
 
     exp(coef) exp(-coef) lower .95 upper .95
-cov    0.7758      1.289    0.3730     1.613
+cov    0.7758      1.289     0.373     1.613
 
 > 
 > ## avec bootstrap
@@ -191,7 +192,7 @@ cox.kmi(formula = Surv(time, ev == 1) ~ cov, imp.data = dat.kmib)
 Pooled estimates:
 *****************
           coef exp(coef)  se(coef)          t         p
-cov -0.2216016 0.8012345 0.3743375 -0.5919834 0.5538821
+cov -0.2076261 0.8125108 0.3726519 -0.5571583 0.5774271
 
 > fit.kmib.fact
 Call:
@@ -201,7 +202,7 @@ cox.kmi(formula = Surv(time, status == "rel") ~ cov, imp.data = dat.kmib.fact)
 Pooled estimates:
 *****************
           coef exp(coef)  se(coef)          t         p
-cov -0.2216016 0.8012345 0.3743375 -0.5919834 0.5538821
+cov -0.2076261 0.8125108 0.3726519 -0.5571583 0.5774271
 
 > 
 > summary(fit.kmib)
@@ -213,10 +214,10 @@ cox.kmi(formula = Surv(time, ev == 1) ~ cov, imp.data = dat.kmib)
 Pooled estimates:
 *****************
        coef exp(coef) se(coef)      t Pr(>|t|)
-cov -0.2216    0.8012   0.3743 -0.592    0.554
+cov -0.2076    0.8125   0.3727 -0.557    0.577
 
     exp(coef) exp(-coef) lower .95 upper .95
-cov    0.8012      1.248    0.3846     1.669
+cov    0.8125      1.231    0.3914     1.687
 
 > 
 > 
@@ -225,21 +226,21 @@ cov    0.8012      1.248    0.3846     1.669
 > data(icu.pneu)
 > 
 > set.seed(1313)
-> dat <- kmi(Surv(entry, exit, status) ~ 1, data = icu.pneu,
-+            etype = event, id= id, failcode = 3, nimp = 5)
+> dat <- kmi(Surv(start, stop, status) ~ 1, data = icu.pneu,
++            etype = event, id= id, failcode = 2, nimp = 5)
 > 
 > ### add a factor for testing purposes
-> icu.pneu$ev.fact <- factor(ifelse(icu.pneu$event == 2, "disch", "death"))
+> icu.pneu$ev.fact <- factor(ifelse(icu.pneu$event == 3, "disch", "death"))
 > 
 > icu.pneu$ev <- icu.pneu$event
 > icu.pneu$ev[icu.pneu$status == 0] <- 0
 > 
 > set.seed(1313)
-> dat2 <- kmi(Surv(entry, exit, ev != 0) ~ 1, data = icu.pneu,
-+            etype = ev, id= id, failcode = 3, nimp = 5)
+> dat2 <- kmi(Surv(start, stop, ev != 0) ~ 1, data = icu.pneu,
++            etype = ev, id= id, failcode = 2, nimp = 5)
 > 
 > set.seed(1313)
-> dat3 <- kmi(Surv(entry, exit, status) ~ 1, data = icu.pneu,
+> dat3 <- kmi(Surv(start, stop, status) ~ 1, data = icu.pneu,
 +             etype = ev.fact, id = id, failcode = "death", nimp = 5)
 > 
 > a <- logical(5)
@@ -247,11 +248,11 @@ cov    0.8012      1.248    0.3846     1.669
 > a
 [1] TRUE TRUE TRUE TRUE TRUE
 > 
-> fit.kmi <- cox.kmi(Surv(entry, exit, event == 3) ~ pneu, dat)
+> fit.kmi <- cox.kmi(Surv(start, stop, event == 2) ~ pneu, dat)
 > 
-> fit.kmi2 <- cox.kmi(Surv(entry, exit, ev == 3) ~ pneu, dat2)
+> fit.kmi2 <- cox.kmi(Surv(start, stop, ev == 2) ~ pneu, dat2)
 > 
-> fit.kmi3 <- cox.kmi(Surv(entry, exit, ev.fact == "death") ~ pneu, dat3)
+> fit.kmi3 <- cox.kmi(Surv(start, stop, ev.fact == "death") ~ pneu, dat3)
 > 
 > all.equal(fit.kmi$coefficients, fit.kmi2$coefficients)
 [1] TRUE
@@ -262,7 +263,7 @@ cov    0.8012      1.248    0.3846     1.669
 > 
 > fit.kmi
 Call:
-cox.kmi(formula = Surv(entry, exit, event == 3) ~ pneu, imp.data = dat)
+cox.kmi(formula = Surv(start, stop, event == 2) ~ pneu, imp.data = dat)
 
 *****************
 Pooled estimates:
@@ -273,7 +274,7 @@ pneu1 1.10382  3.015664 0.2398608 4.60192 4.186147e-06
 > 
 > fit.kmi2
 Call:
-cox.kmi(formula = Surv(entry, exit, ev == 3) ~ pneu, imp.data = dat2)
+cox.kmi(formula = Surv(start, stop, ev == 2) ~ pneu, imp.data = dat2)
 
 *****************
 Pooled estimates:
@@ -284,7 +285,7 @@ pneu1 1.10382  3.015664 0.2398608 4.60192 4.186147e-06
 > 
 > fit.kmi3
 Call:
-cox.kmi(formula = Surv(entry, exit, ev.fact == "death") ~ pneu, 
+cox.kmi(formula = Surv(start, stop, ev.fact == "death") ~ pneu, 
     imp.data = dat3)
 
 *****************
@@ -297,17 +298,17 @@ pneu1 1.10382  3.015664 0.2398608 4.60192 4.186147e-06
 > ## avec bootstrap
 > 
 > set.seed(598085)
-> dat <- kmi(Surv(entry, exit, status) ~ 1, data = icu.pneu,
-+            etype = event, id= id, failcode = 3, nimp = 5,
+> dat <- kmi(Surv(start, stop, status) ~ 1, data = icu.pneu,
++            etype = event, id= id, failcode = 2, nimp = 5,
 +            boot = TRUE, nboot = 5)
 > 
 > set.seed(598085)
-> dat2 <- kmi(Surv(entry, exit, ev != 0) ~ 1, data = icu.pneu,
-+             etype = ev, id= id, failcode = 3, nimp = 5,
+> dat2 <- kmi(Surv(start, stop, ev != 0) ~ 1, data = icu.pneu,
++             etype = ev, id= id, failcode = 2, nimp = 5,
 +             boot = TRUE, nboot = 5)
 > 
 > set.seed(598085)
-> dat3 <- kmi(Surv(entry, exit, status) ~ 1, data = icu.pneu,
+> dat3 <- kmi(Surv(start, stop, status) ~ 1, data = icu.pneu,
 +             etype = ev.fact, id = id, failcode = "death", nimp = 5,
 +             boot = TRUE, nboot = 5)
 > 
@@ -317,11 +318,11 @@ pneu1 1.10382  3.015664 0.2398608 4.60192 4.186147e-06
 > a
 [1] TRUE TRUE TRUE TRUE TRUE
 > 
-> fit.kmi <- cox.kmi(Surv(entry, exit, event == 3) ~ pneu, dat)
+> fit.kmi <- cox.kmi(Surv(start, stop, event == 2) ~ pneu, dat)
 > 
-> fit.kmi2 <- cox.kmi(Surv(entry, exit, ev == 3) ~ pneu, dat2)
+> fit.kmi2 <- cox.kmi(Surv(start, stop, ev == 2) ~ pneu, dat2)
 > 
-> fit.kmi3 <- cox.kmi(Surv(entry, exit, ev.fact == "death") ~ pneu, dat3)
+> fit.kmi3 <- cox.kmi(Surv(start, stop, ev.fact == "death") ~ pneu, dat3)
 > 
 > all.equal(fit.kmi$coefficients, fit.kmi2$coefficients)
 [1] TRUE
@@ -332,7 +333,7 @@ pneu1 1.10382  3.015664 0.2398608 4.60192 4.186147e-06
 > 
 > fit.kmi
 Call:
-cox.kmi(formula = Surv(entry, exit, event == 3) ~ pneu, imp.data = dat)
+cox.kmi(formula = Surv(start, stop, event == 2) ~ pneu, imp.data = dat)
 
 *****************
 Pooled estimates:
@@ -343,7 +344,7 @@ pneu1 1.10376  3.015483 0.2398535 4.601809 4.188386e-06
 > 
 > fit.kmi2
 Call:
-cox.kmi(formula = Surv(entry, exit, ev == 3) ~ pneu, imp.data = dat2)
+cox.kmi(formula = Surv(start, stop, ev == 2) ~ pneu, imp.data = dat2)
 
 *****************
 Pooled estimates:
@@ -354,7 +355,7 @@ pneu1 1.10376  3.015483 0.2398535 4.601809 4.188386e-06
 > 
 > fit.kmi3
 Call:
-cox.kmi(formula = Surv(entry, exit, ev.fact == "death") ~ pneu, 
+cox.kmi(formula = Surv(start, stop, ev.fact == "death") ~ pneu, 
     imp.data = dat3)
 
 *****************
