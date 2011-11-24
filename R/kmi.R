@@ -48,7 +48,8 @@ kmi <- function(formula, data, id = NULL, etype, failcode = 1, nimp = 10, epsilo
         etype[Y[, 2] == 0] <- 0
         etype <- etype[, drop = TRUE]
         ## for classical right-censored data
-        toimpute <- kmi.classic(Y, etype = etype, failcode = failcode, epsilon = epsilon,
+        toimpute <- kmi.classic(Y, etype = etype, failcode = failcode,
+                                epsilon = epsilon,
                                 bootstrap = bootstrap, nboot = nboot)
     }
     itimes <- toimpute$itimes
@@ -66,7 +67,8 @@ kmi <- function(formula, data, id = NULL, etype, failcode = 1, nimp = 10, epsilo
             tt[j] <- sample(cens.times, 1, replace = TRUE, prob = wp)
         }
         newtimes <- c(toimpute$otimes, tt)
-        newevent <- factor(c(levels(etype)[etype][toimpute$place], rep(0, length(tt))))
+        newevent <- factor(c(levels(etype)[etype][toimpute$place],
+                             rep(0, length(tt))))
         data.frame(newtimes, newevent)
     })
     ## we need to put the original data in the same order as the imputed times
