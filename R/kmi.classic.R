@@ -1,7 +1,7 @@
 ### function to get the censoring times and distribution
 ### from competing risks right-censored data
 
-kmi.classic <- function(y, etype, failcode, epsilon,
+kmi.classic <- function(y, x, etype, failcode, epsilon,
                         bootstrap, nboot) {
     if (!is.Surv(y)) stop("y must be a Surv object")
     if (attr(y, "type") != "right") stop("Can only handle right censored data")
@@ -15,6 +15,8 @@ kmi.classic <- function(y, etype, failcode, epsilon,
     ## otimes don't need imputation
     itimes <- y[-ind, 1]
     otimes <- y[ind, 1]
+    cn <- colnames(x)
+    
     if (bootstrap) { # simple bootstrap with remplacement here
         index <- lapply(seq_len(nboot), function(k) {
             sample(seq_len(nrow(y)), nrow(y),
@@ -31,15 +33,23 @@ kmi.classic <- function(y, etype, failcode, epsilon,
         g <- apply(g, 2, mean)
         gg <- c(1, g)
     }
+    
     else {
-        g <- summary(survfit(Surv(y[, 1], y[, 2] == 0) ~ 1))
-        gg <- c(1, g$surv)
-    }  
+        browser()
+        ff <- formula(Surv(y[, 1], y[, 2] == 0) ~ 1)
+        if (!is.null(cn))
+            ff <- update.formula(ff, paste(". ~", paste(cn, collapse = "+")))
+        temp <- coxph(ff, as.data.frame(x))
+        g <- summary(survfit(temp, as.data.frame(x[-ind, ])))$surv
+        gg <- rbind(1, g)
+    }
+    
     a <- FALSE
     if (y[, 2][which.max(y[, 1])] != 0) { # will be true if the last time is an event
         cens.times <- c(cens.times, max(y[, 1]) + epsilon)
         a <- TRUE
     }
+    
     list(gg = gg, cens.times = cens.times, itimes = itimes,
          otimes = otimes, place = ind, a = a)
 }
