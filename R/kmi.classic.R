@@ -35,13 +35,17 @@ kmi.classic <- function(y, x, etype, failcode, epsilon,
     }
     
     else {
-        browser()
         ff <- formula(Surv(y[, 1], y[, 2] == 0) ~ 1)
-        if (!is.null(cn))
+        if (!is.null(cn)) {
             ff <- update.formula(ff, paste(". ~", paste(cn, collapse = "+")))
-        temp <- coxph(ff, as.data.frame(x))
-        g <- summary(survfit(temp, as.data.frame(x[-ind, ])))$surv
-        gg <- rbind(1, g)
+            temp <- coxph(ff, as.data.frame(x))
+            g <- summary(survfit(temp, as.data.frame(x[-ind, ])))$surv
+            gg <- rbind(1, g)
+        } else {
+            g <- summary(survfit(Surv(y[, 1], y[, 2] == 0) ~ 1))$surv
+            gg <- matrix(rep(c(1, g), length(itimes)),
+                         nrow = length(g) + 1)
+        }
     }
     
     a <- FALSE
