@@ -1,7 +1,10 @@
-kmi <- function(formula, data, id = NULL, etype, failcode = 1, nimp = 10, epsilon = 1,
+kmi <- function(formula, data, id = NULL, etype, failcode = 1,
+                nimp = 10, epsilon = 1,
                 bootstrap = FALSE, nboot = 10) {
     
-    if (missing(data)) stop("A data frame in which to interpret the formula must be supplied")
+    if (missing(data))
+        data <- environment(formula)
+        ##stop("A data frame in which to interpret the formula must be supplied")
     if (missing(etype)) stop("'etype' is missing, with no default")
     Call <- match.call()
     
@@ -15,7 +18,7 @@ kmi <- function(formula, data, id = NULL, etype, failcode = 1, nimp = 10, epsilo
     mfnames <- c('formula', 'data', 'id', 'etype')
     temp <- Call[c(1, match(mfnames, names(Call), nomatch=0))]
     temp[[1]] <- as.name("model.frame")
-    m <- eval.parent(temp)
+    m <- eval(temp, parent.frame())
     n <- nrow(m)
     Y <- model.extract(m, 'response')
     if (!is.Surv(Y)) stop("Response must be a survival object")
@@ -27,6 +30,8 @@ kmi <- function(formula, data, id = NULL, etype, failcode = 1, nimp = 10, epsilo
     if (attr(Y, "type") %in% c("interval", "interval2", "left")) {
         stop("kmi can only handle right censored data")
     }
+
+    ## I'll need the covariates in the formula
     
     if (attr(Y, "type") == "counting" && !is.null(id)) {
         info <- c(as.character(aa[[3]])[as.character(aa[[3]]) %in% names(data)],
