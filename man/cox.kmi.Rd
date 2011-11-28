@@ -55,6 +55,16 @@ summary(fit.kmi)
 fit <- coxph(Surv(start, adm.cens.exit, event == 2) ~ pneu, icu.pneu)
 
 summary(fit)
+
+## estimation of the censoring distribution adjusted on covariates
+dat.cova <- kmi(Surv(start, stop, status) ~ age + sex,
+                data = icu.pneu, etype = event, id = id,
+                failcode = 2, nimp = 5)
+
+fit.kmi2 <- cox.kmi(Surv(start, adm.cens.exit, event == 2) ~ pneu + age,
+                    dat.cova)
+
+summary(fit.kmi2)
 }
 \keyword{survival}
 \keyword{models}

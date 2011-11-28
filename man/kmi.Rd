@@ -12,12 +12,14 @@ kmi(formula, data, id = NULL, etype, failcode = 1, nimp = 10,
 }
 \arguments{
   \item{formula}{A \code{formula} object, that must have a \code{Surv}
-    object on the left of a \code{~} operator. The right hand side should be 1.}
+    object on the left of a \code{~} operator. Covariates could be added
+    on the right hand side of the formula. They will be used to model
+    the censoring distribution. See Details.}
   \item{data}{A data.frame in which to interpret the variables given in
-    the formula, etype and id. It is mandatory.}
+    the formula, \code{etype} and \code{id}. It is mandatory.}
   \item{id}{Used to identify individual subjects when one subject can
     have several rows of data, e.g., with time-dependent covariates. Set
-    to NULL when there is only one raw of data per subject.}
+    to \code{NULL} when there is only one raw of data per subject.}
   \item{etype}{Variable specifying the type of competing event. When
     \code{status == 1} in \code{formula}, \code{etype} describes the
     type of event, otherwise, for censored observation, (\code{status ==
@@ -43,7 +45,10 @@ kmi(formula, data, id = NULL, etype, failcode = 1, nimp = 10,
   conditional Kaplan-Meier estimator of the censoring distribution.
 
   Estimation of the censoring distribution may be improved through
-  bootstrapping.
+  bootstrapping. Estimation might also be improved fitting a model for
+  the censoring distribution. When covariates are given, a proportional
+  hazards model on the hazard of censoring is fitted. The censoring
+  times are then imputed from the estimated model.
 
   The competing risks model formulation in \code{formula} mimics the one
   in \code{\link[survival]{survfit}}.
@@ -90,5 +95,10 @@ icu.pneu$ev[icu.pneu$status == 0] <- 0
 
 dat <- kmi(Surv(start, stop, ev != 0) ~ 1, data = icu.pneu,
            etype = ev, id= id, failcode = 2, nimp = 5)
+
+## with covariates to model the censoring distribution
+dat.cova <- kmi(Surv(start, stop, status) ~ age + sex,
+                data = icu.pneu, etype = event, id = id,
+                failcode = 2, nimp = 5)
 }
 \keyword{survival}
