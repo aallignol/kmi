@@ -44,7 +44,7 @@ kmi.tdc <- function(y, x, etype, id, failcode, epsilon,
             g <- array(0, dim = c(length(cens.times), length(itimes), nboot))
             ff <- update.formula(ff, paste(". ~", paste(cn, collapse = "+")))
             for (l in seq_len(nboot)) {
-                temp <- coxph(ff, as.data.frame(x))
+                temp <- coxph(ff, as.data.frame(xsub))
                 tmp <- summary(survfit(temp, as.data.frame(x[-ind, ])))
                 ordre <- findInterval(cens.times, tmp$time)
                 ordre[ordre == 0] <- NA
