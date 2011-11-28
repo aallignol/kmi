@@ -43,7 +43,7 @@ kmi <- function(formula, data, id = NULL, etype, failcode = 1,
         etype <- etype[, drop = TRUE]
         ## for right-censored data with time-dependent covariates, i.e.,
         ## several rows per individual
-        toimpute <- kmi.tdc(Y, id = id, etype = etype, failcode = failcode, 
+        toimpute <- kmi.tdc(Y, X, id = id, etype = etype, failcode = failcode, 
                             epsilon = epsilon, bootstrap = bootstrap,
                             nboot = nboot)
     } else {
