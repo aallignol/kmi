@@ -14,8 +14,12 @@ kmi <- function(formula, data, id = NULL, etype, failcode = 1,
         || inherits(formula, 'Surv'))  {
         stop("'kmi' requires a formula as the first argument")
     }
+
+    ## ugly hack: force the setting of na.action to na.pass to get all
+    ## the times
+    Call$na.action <- as.name("na.pass")
     
-    mfnames <- c('formula', 'data', 'id', 'etype')
+    mfnames <- c('formula', 'data', 'na.action', 'id', 'etype')
     temp <- Call[c(1, match(mfnames, names(Call), nomatch=0))]
     temp[[1]] <- as.name("model.frame")
     m <- eval(temp, parent.frame())
