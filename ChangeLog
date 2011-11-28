@@ -1,3 +1,10 @@
+2011-11-28 Arthur Allignol <arthur.allignol@fdm.uni-freiburg.de>
+
+	* new version number 0.4
+	* kmi: new possibility to fit a proportional hazards model to
+	model the censoring distribution. Censoring times are then imputed
+	from the estimated model.
+
 2011-3-5 Arthur Allignol <arthur.allignol@fdm.uni-freiburg.de>
 
 	* new version number 0.3-4
