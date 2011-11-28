@@ -29,7 +29,7 @@ kmi.tdc <- function(y, x, etype, id, failcode, epsilon,
 
     ## covariates
     cn <- colnames(x)
-    xsub <- x[masque != 0, drop = FALSE]
+    xsub <- x[masque != 0, ,drop = FALSE]
     
     if (bootstrap) {
         index <- lapply(seq_len(nboot), function(k) {
@@ -70,7 +70,7 @@ kmi.tdc <- function(y, x, etype, id, failcode, epsilon,
         
     } else {
         ff <- formula(Surv(ysub[, 2], ysub[, 3] == 0) ~ 1)
-        
+
         if (!is.null(cn)) {
             ff <- update.formula(ff, paste(". ~", paste(cn, collapse = "+")))
             temp <- coxph(ff, as.data.frame(xsub))
