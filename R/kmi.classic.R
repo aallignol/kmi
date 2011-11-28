@@ -31,14 +31,14 @@ kmi.classic <- function(y, x, etype, failcode, epsilon,
             ff <- update.formula(ff, paste(". ~", paste(cn, collapse = "+")))
             for (l in seq_len(nboot)) {
                 temp <- coxph(ff, as.data.frame(x))
-                g[,, l] <- summary(survfit(temp, as.data.frame(x[-ind, ])))$surv
-                ordre <- findInterval(cens.times, temp$time)
+                tmp <- summary(survfit(temp, as.data.frame(x[-ind, ])))
+                ordre <- findInterval(cens.times, tmp$time)
                 ordre[ordre == 0] <- NA
-                g[,, l] <- temp$surv[ordre, ]
+                g[,, l] <- tmp$surv[ordre, ]
                 g[,, l][is.na(g[, , l])] <- 1
             }
             g <- apply(g, c(1, 2), mean)
-            gg <- c(1, g)
+            gg <- rbind(1, g)
         } else {
             g <-  matrix(0, nrow = nboot, ncol = length(cens.times))
             for (l in seq_len(nboot)) {
