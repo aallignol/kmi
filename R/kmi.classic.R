@@ -16,25 +16,46 @@ kmi.classic <- function(y, x, etype, failcode, epsilon,
     itimes <- y[-ind, 1]
     otimes <- y[ind, 1]
     cn <- colnames(x)
-    
+
     if (bootstrap) { # simple bootstrap with remplacement here
         index <- lapply(seq_len(nboot), function(k) {
             sample(seq_len(nrow(y)), nrow(y),
                    replace = TRUE)
         })## might save some time to compute the index within the loop
-        g <- matrix(0, nrow = nboot, ncol = length(cens.times))
-        for (l in seq_len(nboot)) {
-            tmp <- summary(survfit(Surv(y[index[[l]], 1], y[index[[l]], 2] == 0) ~ 1))
-            ordre <- findInterval(cens.times, tmp$time)
-            ordre[ordre == 0] <- NA
-            g[l, ] <- tmp$surv[ordre]
-            g[l, ][is.na(g[l, ])] <- 1
+
+        ff <- formula(Surv(y[index[[l]], 1],
+                           y[index[[l]], 2] == 0) ~ 1)
+        
+        if (!is.null(cn)) {
+            g <- array(0, dim = c(length(cens.times), length(itimes), nboot))
+            ff <- update.formula(ff, paste(". ~", paste(cn, collapse = "+")))
+            for (l in seq_len(nboot)) {
+                temp <- coxph(ff, as.data.frame(x))
+                g[,, l] <- summary(survfit(temp, as.data.frame(x[-ind, ])))$surv
+                ordre <- findInterval(cens.times, temp$time)
+                ordre[ordre == 0] <- NA
+                g[,, l] <- temp$surv[ordre, ]
+                g[,, l][is.na(g[, , l])] <- 1
+            }
+            g <- apply(g, c(1, 2), mean)
+            gg <- c(1, g)
+        } else {
+            g <-  matrix(0, nrow = nboot, ncol = length(cens.times))
+            for (l in seq_len(nboot)) {
+                tmp <- summary(survfit(Surv(y[index[[l]], 1],
+                                            y[index[[l]], 2] == 0) ~ 1))
+                ordre <- findInterval(cens.times, tmp$time)
+                ordre[ordre == 0] <- NA
+                g[l, ] <- tmp$surv[ordre]
+                g[l, ][is.na(g[l, ])] <- 1
+            }
+            g <- apply(g, 2, mean)
+            gg <- matrix(rep(c(1, g), length(itimes)),
+                         nrow = length(g) + 1)
         }
-        g <- apply(g, 2, mean)
-        gg <- c(1, g)
-    }
-    
-    else {
+        
+    } else {
+            
         ff <- formula(Surv(y[, 1], y[, 2] == 0) ~ 1)
         if (!is.null(cn)) {
             ff <- update.formula(ff, paste(". ~", paste(cn, collapse = "+")))
