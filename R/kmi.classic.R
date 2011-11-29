@@ -30,10 +30,6 @@ kmi.classic <- function(y, x, etype, failcode, epsilon,
         }
     }
     
-    
-    ## xx <- x
-    ## xx[is.na(x)
-
     if (bootstrap) { # simple bootstrap with remplacement here
         index <- lapply(seq_len(nboot), function(k) {
             sample(seq_len(nrow(y)), nrow(y),

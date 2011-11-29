@@ -3,6 +3,7 @@
 
 kmi.tdc <- function(y, x, etype, id, failcode, epsilon,
                     bootstrap, nboot) {
+    
     ## We need to be careful for getting the censoring times.
     ## The status variable will be 0 before a change of the time-dependent
     ## covariate status, but that doesn't mean the guy is censored
@@ -30,6 +31,19 @@ kmi.tdc <- function(y, x, etype, id, failcode, epsilon,
     ## covariates
     cn <- colnames(x)
     xsub <- x[masque != 0, ,drop = FALSE]
+
+    xx <- x[-ind, , drop = FALSE]
+    ## let's deal with missing values in a really ugly way,
+    ## i.e., mean imputation
+    if (!is.null(cn)) {
+        if (!all(!is.na(xx))) {
+            warning("Missing values in the variable(s) used for modelling the censoring distribution.\nMean imputation used")
+            mm <- apply(x, 2, mean, na.rm = TRUE)
+            for (i in seq_len(ncol(xx))) {
+                xx[which(is.na(xx[, i])), i] <- mm[i]
+            }
+        }
+    }
     
     if (bootstrap) {
         index <- lapply(seq_len(nboot), function(k) {
@@ -45,7 +59,7 @@ kmi.tdc <- function(y, x, etype, id, failcode, epsilon,
             ff <- update.formula(ff, paste(". ~", paste(cn, collapse = "+")))
             for (l in seq_len(nboot)) {
                 temp <- coxph(ff, as.data.frame(xsub))
-                tmp <- summary(survfit(temp, as.data.frame(x[-ind, , drop = FALSE])))
+                tmp <- summary(survfit(temp, as.data.frame(xx)))
                 ordre <- findInterval(cens.times, tmp$time)
                 ordre[ordre == 0] <- NA
                 g[,, l] <- tmp$surv[ordre, ]
@@ -74,7 +88,7 @@ kmi.tdc <- function(y, x, etype, id, failcode, epsilon,
         if (!is.null(cn)) {
             ff <- update.formula(ff, paste(". ~", paste(cn, collapse = "+")))
             temp <- coxph(ff, as.data.frame(xsub))
-            g <- summary(survfit(temp, as.data.frame(x[-ind, , drop = FALSE])))$surv
+            g <- summary(survfit(temp, as.data.frame(xx)))$surv
             gg <- rbind(1, g)
             
         } else {

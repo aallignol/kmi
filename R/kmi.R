@@ -3,7 +3,7 @@ kmi <- function(formula, data, id = NULL, etype, failcode = 1,
                 bootstrap = FALSE, nboot = 10) {
     
     if (missing(data))
-        ##stop("A data frame in which to interpret the formula must be supplied")
+        stop("A data frame in which to interpret the formula must be supplied")
     
     if (missing(etype)) stop("'etype' is missing, with no default")
     Call <- match.call()
@@ -16,7 +16,7 @@ kmi <- function(formula, data, id = NULL, etype, failcode = 1,
     }
 
     ## ugly hack: force the setting of na.action to na.pass to get all
-    ## the times
+    ## the event times in case of missing values in the covariate.
     Call$na.action <- as.name("na.pass")
     
     mfnames <- c('formula', 'data', 'na.action', 'id', 'etype')
