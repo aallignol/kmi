@@ -17,6 +17,23 @@ kmi.classic <- function(y, x, etype, failcode, epsilon,
     otimes <- y[ind, 1]
     cn <- colnames(x)
 
+    xx <- x[-ind, , drop = FALSE]
+    ## let's deal with missing values in a really ugly way,
+    ## i.e., mean imputation
+    if (!is.null(cn)) {
+        if (!all(!is.na(xx))) {
+            warning("Missing values in the variable(s) used for modelling the censoring distribution.\nMean imputation used")
+            mm <- apply(x, 2, mean, na.rm = TRUE)
+            for (i in seq_len(ncol(xx))) {
+                xx[which(is.na(xx[, i])), i] <- mm[i]
+            }
+        }
+    }
+    
+    
+    ## xx <- x
+    ## xx[is.na(x)
+
     if (bootstrap) { # simple bootstrap with remplacement here
         index <- lapply(seq_len(nboot), function(k) {
             sample(seq_len(nrow(y)), nrow(y),
@@ -31,7 +48,7 @@ kmi.classic <- function(y, x, etype, failcode, epsilon,
             ff <- update.formula(ff, paste(". ~", paste(cn, collapse = "+")))
             for (l in seq_len(nboot)) {
                 temp <- coxph(ff, as.data.frame(x))
-                tmp <- summary(survfit(temp, as.data.frame(x[-ind, , drop = FALSE])))
+                tmp <- summary(survfit(temp, as.data.frame(xx)))
                 ordre <- findInterval(cens.times, tmp$time)
                 ordre[ordre == 0] <- NA
                 g[,, l] <- tmp$surv[ordre, ]
@@ -58,10 +75,10 @@ kmi.classic <- function(y, x, etype, failcode, epsilon,
             
         ff <- formula(Surv(y[, 1], y[, 2] == 0) ~ 1)
         if (!is.null(cn)) {
-            browser()
+
             ff <- update.formula(ff, paste(". ~", paste(cn, collapse = "+")))
             temp <- coxph(ff, as.data.frame(x))
-            g <- summary(survfit(temp, as.data.frame(x[-ind, , drop = FALSE])),
+            g <- summary(survfit(temp, as.data.frame(xx)),
                          times = cens.times, extend = TRUE)$surv
             gg <- rbind(1, g)
         } else {
