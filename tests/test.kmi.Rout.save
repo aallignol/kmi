@@ -1,5 +1,5 @@
 
-R version 2.13.0 (2011-04-13)
+R version 2.14.0 (2011-10-31)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-pc-linux-gnu (64-bit)
@@ -363,5 +363,93 @@ Pooled estimates:
 *****************
          coef exp(coef)  se(coef)        t            p
 pneu1 1.10376  3.015483 0.2398535 4.601809 4.188386e-06
+
+> 
+> ### with covariates
+> ## classic
+> set.seed(1)
+> dd$juhu <- rnorm(nrow(dd))
+> 
+> set.seed(78223)
+> imp.dd <- kmi(Surv(time, ev != 0) ~ juhu, dd,
++               etype = ev, nimp = 5)
+> set.seed(44889)
+> imp.ddb <- kmi(Surv(time, ev != 0) ~ juhu, dd, nimp = 5,
++               etype = ev, boot = TRUE, nboot = 5)
+> 
+> summary(cox.kmi(Surv(time, ev == 1) ~ cov, imp.dd))
+Call:
+cox.kmi(formula = Surv(time, ev == 1) ~ cov, imp.data = imp.dd)
+
+
+*****************
+Pooled estimates:
+*****************
+       coef exp(coef) se(coef)      t Pr(>|t|)
+cov -0.2387    0.7877   0.3836 -0.622    0.534
+
+    exp(coef) exp(-coef) lower .95 upper .95
+cov    0.7877       1.27     0.371     1.672
+
+> summary(cox.kmi(Surv(time, ev == 1) ~ cov, imp.ddb))
+Call:
+cox.kmi(formula = Surv(time, ev == 1) ~ cov, imp.data = imp.ddb)
+
+
+*****************
+Pooled estimates:
+*****************
+       coef exp(coef) se(coef)      t Pr(>|t|)
+cov -0.2384    0.7879   0.3757 -0.635    0.526
+
+    exp(coef) exp(-coef) lower .95 upper .95
+cov    0.7879      1.269    0.3771     1.646
+
+> 
+> ## time-dependent covariates
+> set.seed(9763)
+> imp.dat.c <- kmi(Surv(start, stop, status) ~ age + sex,
++                  data = icu.pneu, etype = event, id = id,
++                  failcode = 2, nimp = 5)
+> 
+> set.seed(19832)
+> imp.dat.cb <- kmi(Surv(start, stop, status) ~ age + sex,
++                   data = icu.pneu, etype = event, id = id,
++                   failcode = 2, nimp = 5, boot = TRUE,
++                   nboot = 5)
+> 
+> summary(cox.kmi(Surv(start, stop, event == 2) ~ pneu,
++                 imp.dat.c))
+Call:
+cox.kmi(formula = Surv(start, stop, event == 2) ~ pneu, imp.data = imp.dat.c)
+
+
+*****************
+Pooled estimates:
+*****************
+       coef exp(coef) se(coef)     t Pr(>|t|)    
+pneu1 1.117     3.055    0.240 4.654 3.25e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+
+      exp(coef) exp(-coef) lower .95 upper .95
+pneu1     3.055     0.3273     1.909      4.89
+
+> summary(cox.kmi(Surv(start, stop, event == 2) ~ pneu,
++                 imp.dat.cb))
+Call:
+cox.kmi(formula = Surv(start, stop, event == 2) ~ pneu, imp.data = imp.dat.cb)
+
+
+*****************
+Pooled estimates:
+*****************
+        coef exp(coef) se(coef)     t Pr(>|t|)    
+pneu1 1.1097    3.0335   0.2399 4.626 3.73e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+
+      exp(coef) exp(-coef) lower .95 upper .95
+pneu1     3.034     0.3297     1.896     4.854
 
 > 

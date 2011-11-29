@@ -187,3 +187,35 @@ fit.kmi
 fit.kmi2
 
 fit.kmi3
+
+### with covariates
+## classic
+set.seed(1)
+dd$juhu <- rnorm(nrow(dd))
+
+set.seed(78223)
+imp.dd <- kmi(Surv(time, ev != 0) ~ juhu, dd,
+              etype = ev, nimp = 5)
+set.seed(44889)
+imp.ddb <- kmi(Surv(time, ev != 0) ~ juhu, dd, nimp = 5,
+              etype = ev, boot = TRUE, nboot = 5)
+
+summary(cox.kmi(Surv(time, ev == 1) ~ cov, imp.dd))
+summary(cox.kmi(Surv(time, ev == 1) ~ cov, imp.ddb))
+
+## time-dependent covariates
+set.seed(9763)
+imp.dat.c <- kmi(Surv(start, stop, status) ~ age + sex,
+                 data = icu.pneu, etype = event, id = id,
+                 failcode = 2, nimp = 5)
+
+set.seed(19832)
+imp.dat.cb <- kmi(Surv(start, stop, status) ~ age + sex,
+                  data = icu.pneu, etype = event, id = id,
+                  failcode = 2, nimp = 5, boot = TRUE,
+                  nboot = 5)
+
+summary(cox.kmi(Surv(start, stop, event == 2) ~ pneu,
+                imp.dat.c))
+summary(cox.kmi(Surv(start, stop, event == 2) ~ pneu,
+                imp.dat.cb))
