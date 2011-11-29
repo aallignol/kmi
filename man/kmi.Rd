@@ -47,7 +47,7 @@ kmi(formula, data, id = NULL, etype, failcode = 1, nimp = 10,
   Estimation of the censoring distribution may be improved through
   bootstrapping. Estimation might also be improved fitting a model for
   the censoring distribution. When covariates are given, a proportional
-  hazards model on the hazard of censoring is fitted. The censoring
+  hazards model on the hazard of censoring is fit. The censoring
   times are then imputed from the estimated model.
 
   The competing risks model formulation in \code{formula} mimics the one
@@ -63,6 +63,16 @@ kmi(formula, data, id = NULL, etype, failcode = 1, nimp = 10,
     the original data set.}
   \item{call}{The matched call.}
 }
+\section{Warning}{
+  When a proportional hazards model is fit for modelling the censoring
+  distribution, the censoring times are imputed from the imputed model.
+  When there is missing covariate information for the prediction, mean
+  imputation is used.
+}  
+\note{
+  This multiple imputation technique does not work for left-truncated
+  data.
+}
 \references{Ruan, P.K. and Gray, R.J. (2008). Analyses of cumulative
   incidence functions via non-parametric multiple
   imputation. \emph{Statistics in Medicine}, 27(27):5709--5724.
@@ -76,10 +86,6 @@ kmi(formula, data, id = NULL, etype, failcode = 1, nimp = 10,
     Statistical Association}. 94(446):496--509.
 }
 \author{Arthur Allignol, \email{arthur.allignol@fdm.uni-freiburg.de}}
-\note{
-  This multiple imputation technique does not work for left-truncated
-  data.
-}
 \seealso{\code{\link{icu.pneu}}, \code{\link{cox.kmi}},
   \code{\link[survival]{Surv}},  \code{\link[survival]{survfit}}}
 \examples{
