@@ -8,4 +8,3 @@ Depends: survival
 Imports: survival, mitools
 Description: The package performs a Kaplan-Meier multiple imputation to recover the missing potential censoring information from competing risks events, so that standard right-censored methods could be applied to the imputed data sets to perform analyses of the cumulative incidence functions.
 License: GPL (>= 2)
-URL: http://www.r-project.org

@@ -1,3 +1,9 @@
+2013-09-16 Arthur Allignol <arthur.allignol@uni-ulm.de>
+
+	* DESCRIPTION: update version number;
+	clean import,depends
+	* NAMESPACE: clean the imports
+
 2011-11-28 Arthur Allignol <arthur.allignol@fdm.uni-freiburg.de>
 
 	* new version number 0.4
