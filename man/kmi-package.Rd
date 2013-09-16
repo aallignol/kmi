@@ -40,9 +40,9 @@ results.
 
 }
 \author{
-Arthur Allignol <arthur.allignol@fdm.uni-freiburg.de>
+Arthur Allignol <arthur.allignol@uni-ulm.de>
 
-Maintainer: Arthur Allignol <arthur.allignol@fdm.uni-freiburg.de>
+Maintainer: Arthur Allignol <arthur.allignol@uni-ulm.de>
 }
 \references{
   Ruan, P.K. and Gray, R.J. (2008). Analyses of cumulative

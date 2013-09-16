@@ -85,7 +85,7 @@ kmi(formula, data, id = NULL, etype, failcode = 1, nimp = 10,
   Subdistribution of a Competing Risk. \emph{Journal of the American
     Statistical Association}. 94(446):496--509.
 }
-\author{Arthur Allignol, \email{arthur.allignol@fdm.uni-freiburg.de}}
+\author{Arthur Allignol, \email{arthur.allignol@uni-ulm.de}}
 \seealso{\code{\link{icu.pneu}}, \code{\link{cox.kmi}},
   \code{\link[survival]{Surv}},  \code{\link[survival]{survfit}}}
 \examples{

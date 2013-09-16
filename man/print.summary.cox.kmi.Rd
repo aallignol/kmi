@@ -22,6 +22,6 @@ print.ind = FALSE, ...)
 \value{
   No value returned
 }
-\author{Arthur Allignol, \email{arthur.allignol@fdm.uni-freiburg.de}}
+\author{Arthur Allignol, \email{arthur.allignol@uni-ulm.de}}
 \seealso{\code{\link{summary.cox.kmi}}}
 \keyword{print}
