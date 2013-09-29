@@ -5,6 +5,6 @@ Title: Kaplan-Meier multiple imputation for the analysis of cumulative incidence
 Author: Arthur Allignol <arthur.allignol@uni-ulm.de>
 Maintainer: Arthur Allignol <arthur.allignol@uni-ulm.de>
 Depends: survival
-Imports: survival, mitools
+Imports: mitools
 Description: The package performs a Kaplan-Meier multiple imputation to recover the missing potential censoring information from competing risks events, so that standard right-censored methods could be applied to the imputed data sets to perform analyses of the cumulative incidence functions.
 License: GPL (>= 2)
