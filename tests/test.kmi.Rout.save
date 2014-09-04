@@ -1,8 +1,7 @@
 
-R version 2.14.0 (2011-10-31)
-Copyright (C) 2011 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
-Platform: x86_64-pc-linux-gnu (64-bit)
+R version 3.1.1 (2014-07-10) -- "Sock it to Me"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-suse-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -22,7 +21,6 @@ Type 'q()' to quit R.
 Loading required package: kmi
 Loading required package: survival
 Loading required package: splines
-Loading required package: mitools
 > 
 > ### test 1 
 > 
@@ -117,57 +115,13 @@ Loading required package: mitools
 > all.equal(fit.kmi$variance, fit.kmi.mixed2$variance)
 [1] TRUE
 > 
-> fit.kmi
-Call:
-cox.kmi(formula = Surv(time, ev == 1) ~ cov, imp.data = dat.kmi)
-
-*****************
-Pooled estimates:
-*****************
-          coef exp(coef)  se(coef)          t         p
-cov -0.2538521 0.7758065 0.3735394 -0.6795859 0.4967838
-
+> ## fit.kmi
 > 
-> summary(fit.kmi)
-Call:
-cox.kmi(formula = Surv(time, ev == 1) ~ cov, imp.data = dat.kmi)
-
-
-*****************
-Pooled estimates:
-*****************
-       coef exp(coef) se(coef)     t Pr(>|t|)
-cov -0.2539    0.7758   0.3735 -0.68    0.497
-
-    exp(coef) exp(-coef) lower .95 upper .95
-cov    0.7758      1.289     0.373     1.613
-
+> ## summary(fit.kmi)
 > 
-> fit.kmi.fact
-Call:
-cox.kmi(formula = Surv(time, status == "rel") ~ cov, imp.data = dat.kmi)
-
-*****************
-Pooled estimates:
-*****************
-          coef exp(coef)  se(coef)          t         p
-cov -0.2538521 0.7758065 0.3735394 -0.6795859 0.4967838
-
+> ## fit.kmi.fact
 > 
-> summary(fit.kmi.fact)
-Call:
-cox.kmi(formula = Surv(time, status == "rel") ~ cov, imp.data = dat.kmi)
-
-
-*****************
-Pooled estimates:
-*****************
-       coef exp(coef) se(coef)     t Pr(>|t|)
-cov -0.2539    0.7758   0.3735 -0.68    0.497
-
-    exp(coef) exp(-coef) lower .95 upper .95
-cov    0.7758      1.289     0.373     1.613
-
+> ## summary(fit.kmi.fact)
 > 
 > ## avec bootstrap
 > 
@@ -430,7 +384,7 @@ Pooled estimates:
        coef exp(coef) se(coef)     t Pr(>|t|)    
 pneu1 1.117     3.055    0.240 4.654 3.25e-06 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
       exp(coef) exp(-coef) lower .95 upper .95
 pneu1     3.055     0.3273     1.909      4.89
@@ -447,9 +401,12 @@ Pooled estimates:
         coef exp(coef) se(coef)     t Pr(>|t|)    
 pneu1 1.1097    3.0335   0.2399 4.626 3.73e-06 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
       exp(coef) exp(-coef) lower .95 upper .95
 pneu1     3.034     0.3297     1.896     4.854
 
 > 
+> proc.time()
+   user  system elapsed 
+  4.409   0.035   4.494 

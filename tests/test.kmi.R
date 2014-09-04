@@ -80,13 +80,13 @@ all.equal(fit.kmi$variance, fit.kmi.fact$variance)
 all.equal(fit.kmi$variance, fit.kmi.mixed1$variance)
 all.equal(fit.kmi$variance, fit.kmi.mixed2$variance)
 
-fit.kmi
+## fit.kmi
 
-summary(fit.kmi)
+## summary(fit.kmi)
 
-fit.kmi.fact
+## fit.kmi.fact
 
-summary(fit.kmi.fact)
+## summary(fit.kmi.fact)
 
 ## avec bootstrap
 
