@@ -1,6 +1,6 @@
 
-R version 3.1.1 (2014-07-10) -- "Sock it to Me"
-Copyright (C) 2014 The R Foundation for Statistical Computing
+R version 3.3.2 (2016-10-31) -- "Sincere Pumpkin Patch"
+Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-suse-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -17,10 +17,10 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
+> require(survival)
+Loading required package: survival
 > require(kmi)
 Loading required package: kmi
-Loading required package: survival
-Loading required package: splines
 > 
 > ### test 1 
 > 
@@ -146,7 +146,7 @@ cox.kmi(formula = Surv(time, ev == 1) ~ cov, imp.data = dat.kmib)
 Pooled estimates:
 *****************
           coef exp(coef)  se(coef)          t         p
-cov -0.2076261 0.8125108 0.3726519 -0.5571583 0.5774271
+cov -0.2216016 0.8012345 0.3743375 -0.5919834 0.5538821
 
 > fit.kmib.fact
 Call:
@@ -156,7 +156,7 @@ cox.kmi(formula = Surv(time, status == "rel") ~ cov, imp.data = dat.kmib.fact)
 Pooled estimates:
 *****************
           coef exp(coef)  se(coef)          t         p
-cov -0.2076261 0.8125108 0.3726519 -0.5571583 0.5774271
+cov -0.2216016 0.8012345 0.3743375 -0.5919834 0.5538821
 
 > 
 > summary(fit.kmib)
@@ -168,10 +168,10 @@ cox.kmi(formula = Surv(time, ev == 1) ~ cov, imp.data = dat.kmib)
 Pooled estimates:
 *****************
        coef exp(coef) se(coef)      t Pr(>|t|)
-cov -0.2076    0.8125   0.3727 -0.557    0.577
+cov -0.2216    0.8012   0.3743 -0.592    0.554
 
     exp(coef) exp(-coef) lower .95 upper .95
-cov    0.8125      1.231    0.3914     1.687
+cov    0.8012      1.248    0.3846     1.669
 
 > 
 > 
@@ -409,4 +409,4 @@ pneu1     3.034     0.3297     1.896     4.854
 > 
 > proc.time()
    user  system elapsed 
-  4.409   0.035   4.494 
+  5.104   0.024   5.119 
