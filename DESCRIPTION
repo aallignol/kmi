@@ -1,10 +1,10 @@
 Package: kmi
 Version: 0.5.2
-Title: Kaplan-Meier multiple imputation for the analysis of cumulative incidence functions in the competing risks setting
+Title: Kaplan-Meier Multiple Imputation for the Analysis of Cumulative Incidence Functions in the Competing Risks Setting
 Author: Arthur Allignol <arthur.allignol@uni-ulm.de>
 Maintainer: Arthur Allignol <arthur.allignol@uni-ulm.de>
 Imports: mitools,survival,stats
-Description: The package performs a Kaplan-Meier multiple imputation to recover the missing potential censoring information from competing risks events, so that standard right-censored methods could be applied to the imputed data sets to perform analyses of the cumulative incidence functions.
+Description: The kmi package performs a Kaplan-Meier multiple imputation to recover the missing potential censoring information from competing risks events, so that standard right-censored methods could be applied to the imputed data sets to perform analyses of the cumulative incidence functions.
 License: GPL (>= 2)
 URL: https://github.com/aallignol/kmi
 BugReports: https://github.com/aallignol/kmi/issues
