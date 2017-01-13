@@ -1,3 +1,4 @@
+require(survival)
 require(kmi)
 
 ### test 1 
