@@ -1,5 +1,7 @@
 import(survival)
 importFrom(mitools, MIcombine)
+importFrom("stats", "formula", "model.extract", "model.matrix",
+           "printCoefmat", "pt", "qt", "update.formula")
 export(kmi, cox.kmi, summary.cox.kmi)
 S3method(print, cox.kmi)
 S3method(summary, cox.kmi)
