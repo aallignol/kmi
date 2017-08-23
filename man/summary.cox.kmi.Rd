@@ -29,7 +29,7 @@
   \item{individual.fit}{A list of \code{summary.coxph} objects for each
     imputed data set}
 }
-\author{Arthur Allignol, \email{arthur.allignol@uni-ulm.de}}
+\author{Arthur Allignol, \email{arthur.allignol@gmail.com}}
 \seealso{\code{\link{cox.kmi}}, \code{\link{print.summary.cox.kmi}},
   \code{\link[survival]{summary.coxph}}}
 \keyword{methods}

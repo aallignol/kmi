@@ -1,11 +1,11 @@
-2017-01-13 Arthur Allignol <arthur.allignol@uni-ulm.de> 
+2017-01-13 Arthur Allignol <arthur.allignol@gmail.com> 
 
 	* version number 0.5.2
 	* NAMESPACE and DESCRIPTION: import stats and survival
 	* Examples and tests: require(survival) statements
 	* Rerun of the test file
 
-2013-09-16 Arthur Allignol <arthur.allignol@uni-ulm.de>
+2013-09-16 Arthur Allignol <arthur.allignol@gmail.com>
 
 	* DESCRIPTION: update version number;
 	clean import,depends

@@ -36,7 +36,7 @@ cox.kmi(formula, imp.data, df.complete = Inf, ...)
   \item{individual.fit}{A list of \code{coxph} objects. One for each
     imputed data set.}
 }
-\author{Arthur Allignol, \email{arthur.allignol@uni-ulm.de}}
+\author{Arthur Allignol, \email{arthur.allignol@gmail.com}}
 \seealso{\code{\link[survival]{coxph}},
   \code{\link[mitools]{MIcombine}}, \code{\link{print.cox.kmi}},
   \code{\link{summary.cox.kmi}}}
