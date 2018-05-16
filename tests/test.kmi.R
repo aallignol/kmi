@@ -249,14 +249,4 @@ imp.datnew <- kmi(Surv(start, stop, outcome != 0) ~ 1,
 
 # page 222
 kmi.sh.hap <- cox.kmi(Surv(start, stop, outcome == 2) ~ pneu, imp.datnew)
-summary(kmi.sh.hap) # returns an error despite of the fact that
-
-
-kmi(Surv(start, stop, outcome != 0) ~ 1,
-    data = icu.pneu[1:144,], etype = outcome,
-    id = id, failcode = 2, nimp = 10) # works when I use the first 144 obs.
-
-
-kmi(Surv(start, stop, outcome != 0) ~ 1,
-                 data = icu.pneu[1:145,], etype = outcome,
-                 id = id, failcode = 2, nimp = 10) # suddenly stops working
+summary(kmi.sh.hap)
