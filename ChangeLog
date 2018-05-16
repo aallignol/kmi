@@ -1,3 +1,9 @@
+2018-05-16 Arthur Allignol <arthur.allignol@gmail.com>
+
+	* Version number 0.5.4
+	* bug fix when the data with time-dependent variables are not
+	ordered
+
 2017-09-18 Arthur Allignol <arthur.allignol@gmail.com>
 
 	* Version number 0.5.3
