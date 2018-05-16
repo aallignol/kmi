@@ -1,7 +1,7 @@
 require(survival)
 require(kmi)
 
-### test 1 
+### test 1
 
 id <- 1:10
 time <- 1:10
@@ -220,3 +220,43 @@ summary(cox.kmi(Surv(start, stop, event == 2) ~ pneu,
                 imp.dat.c))
 summary(cox.kmi(Surv(start, stop, event == 2) ~ pneu,
                 imp.dat.cb))
+
+
+## Test ordering of the data set
+
+data(icu.pneu)
+icu.pneu$outcome <- with(icu.pneu, status * event)
+
+mydata1 <- icu.pneu[1:2, ]
+mydata2 <- icu.pneu[3:1421, ]
+
+## page 221
+set.seed(453)
+imp.dat <- kmi(Surv(start, stop, outcome != 0) ~ 1,
+    data = icu.pneu, etype = outcome,
+    id = id, failcode = 2, nimp = 10)
+
+## page 222
+kmi.sh.hap <- cox.kmi(Surv(start, stop, outcome == 2) ~ pneu, imp.dat)
+summary(kmi.sh.hap)
+
+newicu.pneu <- as.data.frame(rbind( mydata2, mydata1))
+tail(newicu.pneu)
+
+imp.datnew <- kmi(Surv(start, stop, outcome != 0) ~ 1,
+    data = newicu.pneu, etype = outcome,
+    id = id, failcode = 2, nimp = 10)
+
+# page 222
+kmi.sh.hap <- cox.kmi(Surv(start, stop, outcome == 2) ~ pneu, imp.datnew)
+summary(kmi.sh.hap) # returns an error despite of the fact that
+
+
+kmi(Surv(start, stop, outcome != 0) ~ 1,
+    data = icu.pneu[1:144,], etype = outcome,
+    id = id, failcode = 2, nimp = 10) # works when I use the first 144 obs.
+
+
+kmi(Surv(start, stop, outcome != 0) ~ 1,
+                 data = icu.pneu[1:145,], etype = outcome,
+                 id = id, failcode = 2, nimp = 10) # suddenly stops working

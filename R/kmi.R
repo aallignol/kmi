@@ -1,13 +1,13 @@
 kmi <- function(formula, data, id = NULL, etype, failcode = 1,
                 nimp = 10, epsilon = 1,
                 bootstrap = FALSE, nboot = 10) {
-    
+
     if (missing(data))
         stop("A data frame in which to interpret the formula must be supplied")
-    
+
     if (missing(etype)) stop("'etype' is missing, with no default")
     Call <- match.call()
-    
+
     ## I'll need the name of the etype column in cox.kmi()
     arg.etype <- deparse(substitute(etype))
     if ((mode(Call[[2]]) == 'call' &&  Call[[2]][[1]] == as.name('Surv'))
@@ -18,7 +18,17 @@ kmi <- function(formula, data, id = NULL, etype, failcode = 1,
     ## ugly hack: force the setting of na.action to na.pass to get all
     ## the event times in case of missing values in the covariate.
     Call$na.action <- as.name("na.pass")
-    
+
+    ## Try to order the data at this level. We assume that id is
+    ## supplied with counting data. There is a test later on.
+    the_surv_part <- Call[[2]][[2]]
+    if ("id" %in% names(Call)) {
+        col_id <- deparse(substitute(id))
+        col_start <- as.character(the_surv_part[[2]])
+        col_stop <- as.character(the_surv_part[[3]])
+        data <- data[order(data[, col_id], data[, col_start], data[, col_stop]), ]
+    }
+
     mfnames <- c('formula', 'data', 'na.action', 'id', 'etype')
     temp <- Call[c(1, match(mfnames, names(Call), nomatch=0))]
     temp[[1]] <- as.name("model.frame")
@@ -30,13 +40,13 @@ kmi <- function(formula, data, id = NULL, etype, failcode = 1,
     etype <- model.extract(m, "etype")
     mt <- attr(m, "terms")
     X <- model.matrix(mt, m)[, -1, drop = FALSE]
-        
+
     ## to get the name of the 'time' column
     aa <- Call[[2]][[2]]
     if (attr(Y, "type") %in% c("interval", "interval2", "left")) {
         stop("kmi can only handle right censored data")
     }
-    
+
     if (attr(Y, "type") == "counting" && !is.null(id)) {
         info <- c(as.character(aa[[3]])[as.character(aa[[3]]) %in% names(data)],
                   arg.etype)
@@ -47,7 +57,7 @@ kmi <- function(formula, data, id = NULL, etype, failcode = 1,
         etype <- etype[, drop = TRUE]
         ## for right-censored data with time-dependent covariates, i.e.,
         ## several rows per individual
-        toimpute <- kmi.tdc(Y, X, id = id, etype = etype, failcode = failcode, 
+        toimpute <- kmi.tdc(Y, X, id = id, etype = etype, failcode = failcode,
                             epsilon = epsilon, bootstrap = bootstrap,
                             nboot = nboot)
     } else {
@@ -62,11 +72,11 @@ kmi <- function(formula, data, id = NULL, etype, failcode = 1,
                                 epsilon = epsilon,
                                 bootstrap = bootstrap, nboot = nboot)
     }
-    
+
     itimes <- toimpute$itimes
     gg <- toimpute$gg
     lg <- NROW(gg)
-    
+
     cens.times <- toimpute$cens.times
     tmp <- findInterval(itimes, c(0, cens.times))
 
@@ -75,7 +85,7 @@ kmi <- function(formula, data, id = NULL, etype, failcode = 1,
         for (j in seq_along(itimes)) {
             spr <- gg[, j] / c(gg[1:tmp[j], j], rep(gg[tmp[j], j], lg - tmp[j]))
             wp <- -diff(spr)
-            ## if the last time is an event, a == TRUE and we add another probability 
+            ## if the last time is an event, a == TRUE and we add another probability
             wp <- if (toimpute$a) c(wp, spr[length(spr)]) else wp
             tt[j] <- sample(cens.times, 1, replace = TRUE, prob = wp)
         }
@@ -84,10 +94,10 @@ kmi <- function(formula, data, id = NULL, etype, failcode = 1,
                              rep(0, length(tt))))
         data.frame(newtimes, newevent)
     })
-    
+
     ## we need to put the original data in the same order as the imputed times
     orig.data <- rbind(data[toimpute$place, ], data[-toimpute$place, ])
-    
+
     zzz <- list(imputed.data = res,
                 original.data = orig.data,
                 info = info,
