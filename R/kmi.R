@@ -80,6 +80,8 @@ kmi <- function(formula, data, id = NULL, etype, failcode = 1,
     cens.times <- toimpute$cens.times
     tmp <- findInterval(itimes, c(0, cens.times))
 
+    if (length(cens.times) == 1) stop("'kmi' can't make imputation based on one censoring time")
+
     res <- lapply(seq_len(nimp), function(i) {
         tt <- double(length(itimes))
         for (j in seq_along(itimes)) {
