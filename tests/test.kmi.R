@@ -243,6 +243,7 @@ summary(kmi.sh.hap)
 newicu.pneu <- as.data.frame(rbind( mydata2, mydata1))
 tail(newicu.pneu)
 
+set.seed(453)
 imp.datnew <- kmi(Surv(start, stop, outcome != 0) ~ 1,
     data = newicu.pneu, etype = outcome,
     id = id, failcode = 2, nimp = 10)

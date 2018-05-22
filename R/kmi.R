@@ -26,7 +26,10 @@ kmi <- function(formula, data, id = NULL, etype, failcode = 1,
         col_id <- deparse(substitute(id))
         col_start <- as.character(the_surv_part[[2]])
         col_stop <- as.character(the_surv_part[[3]])
-        data <- data[order(data[, col_id], data[, col_start], data[, col_stop]), ]
+        the_order <- order(data[, col_id], data[, col_start], data[, col_stop])
+        data <- data[the_order, ]
+    } else {
+        the_order <- seq_len(nrow(data))
     }
 
     mfnames <- c('formula', 'data', 'na.action', 'id', 'etype')
@@ -34,12 +37,12 @@ kmi <- function(formula, data, id = NULL, etype, failcode = 1,
     temp[[1]] <- as.name("model.frame")
     m <- eval(temp, parent.frame())
     n <- nrow(m)
-    Y <- model.extract(m, 'response')
+    Y <- model.extract(m, 'response')[the_order]
     if (!is.Surv(Y)) stop("Response must be a survival object")
-    id <- model.extract(m, "id")
-    etype <- model.extract(m, "etype")
+    id <- model.extract(m, "id")[the_order]
+    etype <- model.extract(m, "etype")[the_order]
     mt <- attr(m, "terms")
-    X <- model.matrix(mt, m)[, -1, drop = FALSE]
+    X <- model.matrix(mt, m)[the_order, -1, drop = FALSE]
 
     ## to get the name of the 'time' column
     aa <- Call[[2]][[2]]

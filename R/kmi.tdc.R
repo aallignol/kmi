@@ -7,16 +7,7 @@ kmi.tdc <- function(y, x, etype, id, failcode, epsilon,
     ## We need to be careful for getting the censoring times.
     ## The status variable will be 0 before a change of the time-dependent
     ## covariate status, but that doesn't mean the guy is censored
-    ## BUG FIX: Ordering was only done for times and status.
-    ## Need to order the rest too
-    the_order <- order(id, y[, 2])
-    y <- y[the_order, ]
-    etype <- etype[the_order]
-    id <- id[the_order]
-    x <- x[the_order, ]
 
-    ## etype won't necessary be 0 for censored observations
-    ## etype[y[, 3] == 0] <- 0
     ## We want to get the last row of each individual that contains
     ## the actual status at the end of the follow-up
     masque <- rbind(1, apply(as.matrix(id), 2, diff))
