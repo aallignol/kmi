@@ -1,7 +1,7 @@
 
-R version 3.5.0 (2018-04-23) -- "Joy in Playing"
-Copyright (C) 2018 The R Foundation for Statistical Computing
-Platform: x86_64-apple-darwin17.5.0 (64-bit)
+R version 3.6.0 (2019-04-26) -- "Planting of a Tree"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin18.5.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -145,8 +145,8 @@ cox.kmi(formula = Surv(time, ev == 1) ~ cov, imp.data = dat.kmib)
 *****************
 Pooled estimates:
 *****************
-          coef exp(coef)  se(coef)          t         p
-cov -0.2216016 0.8012345 0.3743375 -0.5919834 0.5538821
+           coef exp(coef)  se(coef)          t         p
+cov -0.07328941 0.9293318 0.3126316 -0.2344274 0.8146571
 
 > fit.kmib.fact
 Call:
@@ -155,8 +155,8 @@ cox.kmi(formula = Surv(time, status == "rel") ~ cov, imp.data = dat.kmib.fact)
 *****************
 Pooled estimates:
 *****************
-          coef exp(coef)  se(coef)          t         p
-cov -0.2216016 0.8012345 0.3743375 -0.5919834 0.5538821
+           coef exp(coef)  se(coef)          t         p
+cov -0.07328941 0.9293318 0.3126316 -0.2344274 0.8146571
 
 >
 > summary(fit.kmib)
@@ -167,11 +167,11 @@ cox.kmi(formula = Surv(time, ev == 1) ~ cov, imp.data = dat.kmib)
 *****************
 Pooled estimates:
 *****************
-       coef exp(coef) se(coef)      t Pr(>|t|)
-cov -0.2216    0.8012   0.3743 -0.592    0.554
+        coef exp(coef) se(coef)      t Pr(>|t|)
+cov -0.07329   0.92933  0.31263 -0.234    0.815
 
     exp(coef) exp(-coef) lower .95 upper .95
-cov    0.8012      1.248    0.3846     1.669
+cov    0.9293      1.076    0.5035     1.715
 
 >
 >
@@ -292,8 +292,8 @@ cox.kmi(formula = Surv(start, stop, event == 2) ~ pneu, imp.data = dat)
 *****************
 Pooled estimates:
 *****************
-         coef exp(coef)  se(coef)        t            p
-pneu1 1.10376  3.015483 0.2398535 4.601809 4.188386e-06
+          coef exp(coef)  se(coef)        t            p
+pneu1 1.104148  3.016652 0.2399367 4.601829 4.188064e-06
 
 >
 > fit.kmi2
@@ -303,8 +303,8 @@ cox.kmi(formula = Surv(start, stop, ev == 2) ~ pneu, imp.data = dat2)
 *****************
 Pooled estimates:
 *****************
-         coef exp(coef)  se(coef)        t            p
-pneu1 1.10376  3.015483 0.2398535 4.601809 4.188386e-06
+          coef exp(coef)  se(coef)        t            p
+pneu1 1.104148  3.016652 0.2399367 4.601829 4.188064e-06
 
 >
 > fit.kmi3
@@ -315,8 +315,8 @@ cox.kmi(formula = Surv(start, stop, ev.fact == "death") ~ pneu,
 *****************
 Pooled estimates:
 *****************
-         coef exp(coef)  se(coef)        t            p
-pneu1 1.10376  3.015483 0.2398535 4.601809 4.188386e-06
+          coef exp(coef)  se(coef)        t            p
+pneu1 1.104148  3.016652 0.2399367 4.601829 4.188064e-06
 
 >
 > ### with covariates
@@ -340,10 +340,10 @@ cox.kmi(formula = Surv(time, ev == 1) ~ cov, imp.data = imp.dd)
 Pooled estimates:
 *****************
        coef exp(coef) se(coef)      t Pr(>|t|)
-cov -0.2387    0.7877   0.3836 -0.622    0.534
+cov -0.0485    0.9527   0.3155 -0.154    0.878
 
     exp(coef) exp(-coef) lower .95 upper .95
-cov    0.7877       1.27     0.371     1.672
+cov    0.9527       1.05    0.5132     1.768
 
 > summary(cox.kmi(Surv(time, ev == 1) ~ cov, imp.ddb))
 Call:
@@ -353,11 +353,11 @@ cox.kmi(formula = Surv(time, ev == 1) ~ cov, imp.data = imp.ddb)
 *****************
 Pooled estimates:
 *****************
-       coef exp(coef) se(coef)      t Pr(>|t|)
-cov -0.2384    0.7879   0.3757 -0.635    0.526
+        coef exp(coef) se(coef)      t Pr(>|t|)
+cov -0.08706   0.91662  0.31606 -0.275    0.783
 
     exp(coef) exp(-coef) lower .95 upper .95
-cov    0.7879      1.269    0.3771     1.646
+cov    0.9166      1.091    0.4932     1.704
 
 >
 > ## time-dependent covariates
@@ -399,12 +399,12 @@ cox.kmi(formula = Surv(start, stop, event == 2) ~ pneu, imp.data = imp.dat.cb)
 Pooled estimates:
 *****************
         coef exp(coef) se(coef)     t Pr(>|t|)
-pneu1 1.1097    3.0335   0.2399 4.626 3.73e-06 ***
+pneu1 1.1077    3.0274   0.2403 4.609 4.04e-06 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
       exp(coef) exp(-coef) lower .95 upper .95
-pneu1     3.034     0.3297     1.896     4.854
+pneu1     3.027     0.3303      1.89     4.849
 
 >
 >
@@ -477,4 +477,4 @@ pneu1     3.021      0.331     1.888     4.835
 >
 > proc.time()
    user  system elapsed
-  3.501   0.222   3.612
+  3.496   0.200   3.706
